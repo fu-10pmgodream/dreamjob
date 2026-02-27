@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Component 
 public class DBContext {
     
-    // Lấy thông tin trực tiếp từ application.properties, không cần file .properties riêng
     @Value("${spring.datasource.url}")
     private String url;
     

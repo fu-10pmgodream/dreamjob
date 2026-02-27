@@ -29,20 +29,20 @@ public class AuthInterceptor implements HandlerInterceptor {
         String contextPath = request.getContextPath();
 
         // Kiểm tra quyền theo route
-        if (requestURI.startsWith(contextPath + "/admin/") && !user.isAdmin()) {
-            response.sendRedirect(contextPath + "/home?error=forbidden");
-            return false;
-        }
-
-        if (requestURI.startsWith(contextPath + "/recruiter/") && !user.isRecruiter()) {
-            response.sendRedirect(contextPath + "/home?error=forbidden");
-            return false;
-        }
-
-        if (requestURI.startsWith(contextPath + "/jobseeker/") && !user.isJobSeeker()) {
-            response.sendRedirect(contextPath + "/home?error=forbidden");
-            return false;
-        }
+//        if (requestURI.startsWith(contextPath + "/admin/") && !user.isAdmin()) {
+//            response.sendRedirect(contextPath + "/home?error=forbidden");
+//            return false;
+//        }
+//
+//        if (requestURI.startsWith(contextPath + "/recruiter/") && !user.isRecruiter()) {
+//            response.sendRedirect(contextPath + "/home?error=forbidden");
+//            return false;
+//        }
+//
+//        if (requestURI.startsWith(contextPath + "/jobseeker/") && !user.isJobSeeker()) {
+//            response.sendRedirect(contextPath + "/home?error=forbidden");
+//            return false;
+//        }
 
         return true;
     }

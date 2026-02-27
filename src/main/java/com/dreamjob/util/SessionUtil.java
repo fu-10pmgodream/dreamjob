@@ -24,27 +24,27 @@ public class SessionUtil {
         return getCurrentUser(session) != null;
     }
 
-    public static boolean isAdmin(HttpSession session) {
-        User user = getCurrentUser(session);
-        return user != null && user.isAdmin();
-    }
-
-    public static boolean isRecruiter(HttpSession session) {
-        User user = getCurrentUser(session);
-        return user != null && user.isRecruiter();
-    }
-
-    public static boolean isJobSeeker(HttpSession session) {
-        User user = getCurrentUser(session);
-        return user != null && user.isJobSeeker();
-    }
-
-    public static void logout(HttpSession session) {
-        session.invalidate();
-    }
-
-    public static Integer getCurrentUserId(HttpSession session) {
-        User user = getCurrentUser(session);
-        return user != null ? user.getUserId() : null;
-    }
+//    public static boolean isAdmin(HttpSession session) {
+//        User user = getCurrentUser(session);
+//        return user != null && user.isAdmin();
+//    }
+//
+//    public static boolean isRecruiter(HttpSession session) {
+//        User user = getCurrentUser(session);
+//        return user != null && user.isRecruiter();
+//    }
+//
+//    public static boolean isJobSeeker(HttpSession session) {
+//        User user = getCurrentUser(session);
+//        return user != null && user.isJobSeeker();
+//    }
+//
+//    public static void logout(HttpSession session) {
+//        session.invalidate();
+//    }
+//
+//    public static Integer getCurrentUserId(HttpSession session) {
+//        User user = getCurrentUser(session);
+//        return user != null ? user.getUserId() : null;
+//    }
 }
