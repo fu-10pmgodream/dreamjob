@@ -1,6 +1,9 @@
 package com.dreamjob.controller;
 
+import com.dreamjob.dal.ProfileDAO;
 import com.dreamjob.dal.UserDAO;
+import com.dreamjob.model.JobSeekerProfile;
+import com.dreamjob.model.RecruiterProfile;
 import com.dreamjob.model.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,9 @@ public class AuthController {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private ProfileDAO profileDAO;
 
     @GetMapping("/login")
     public String loginPage(HttpSession session) {
@@ -70,6 +76,42 @@ public class AuthController {
         user.setPhone(phone);
 
         if (userDAO.register(user, password)) {
+            User createdUser = userDAO.findByEmail(email);
+
+            // ===============================
+            // Nếu là RECRUITER
+            // ===============================
+            if ("RECRUITER".equalsIgnoreCase(role)) {
+
+                RecruiterProfile recruiterProfile = new RecruiterProfile();
+                recruiterProfile.setUserId(createdUser.getUserId());
+                recruiterProfile.setCompanyName("Chưa cập nhật");
+                recruiterProfile.setCompanyDescription("");
+                recruiterProfile.setWebsite("");
+                recruiterProfile.setLogoPath(null);
+                recruiterProfile.setCompanySize("");
+                recruiterProfile.setLocationId(0);
+
+                profileDAO.upsertRecruiterProfile(recruiterProfile, fullName, phone);
+            }
+
+            // ===============================
+            // Nếu là JOBSEEKER
+            // ===============================
+            if ("JOBSEEKER".equalsIgnoreCase(role)) {
+
+                JobSeekerProfile profile = new JobSeekerProfile();
+                profile.setUserId(createdUser.getUserId());
+                profile.setTitle("");
+                profile.setSkills("");
+                profile.setExperienceYears(0);
+                profile.setEducation("");
+                profile.setCvPath(null);
+                profile.setLocationId(0);
+
+                profileDAO.upsertSeekerProfile(profile, fullName, phone);
+            }
+
             return "redirect:/login?success=true";
         } else {
             model.addAttribute("error", "Đã có lỗi xảy ra, vui lòng thử lại!");

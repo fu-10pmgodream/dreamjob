@@ -154,7 +154,8 @@
 
 <script>
 function toggleSave(btn, jobId) {
-    fetch('/saved-jobs/toggle', {
+    const contextPath = '${pageContext.request.contextPath}';
+    fetch(contextPath + '/saved-jobs/toggle', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: 'jobId=' + jobId
@@ -163,11 +164,17 @@ function toggleSave(btn, jobId) {
             btn.textContent = '★ Đã lưu';
             btn.classList.remove('bg-gray-100','text-gray-600');
             btn.classList.add('bg-yellow-100','text-yellow-700');
-        } else {
+        } else if (res === 'unsaved') {
             btn.textContent = '☆ Lưu lại';
             btn.classList.remove('bg-yellow-100','text-yellow-700');
             btn.classList.add('bg-gray-100','text-gray-600');
+        } else if (res === 'error') {
+            alert("Lỗi: Không tìm thấy hồ sơ người tìm việc hoặc bạn cấn đăng nhập lại!");
+        } else {
+            console.log("Server response:", res);
         }
+    }).catch(err => {
+        console.error('Fetch error:', err);
     });
 }
 </script>
