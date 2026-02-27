@@ -35,69 +35,68 @@
         </div>
     </section>
 
-    <!-- Featured Jobs Section -->
+    <!-- Featured Jobs Section (Top Rated/Recommended) -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="flex justify-between items-end mb-10">
             <div>
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">Việc Làm Nổi Bật</h2>
-                <p class="text-gray-500">Những cơ hội nghề nghiệp tốt nhất vừa được đăng tuyển</p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">🔥 Việc Làm Hấp Dẫn (Lương Cao)</h2>
+                <p class="text-gray-500">Cơ hội thu nhập khủng từ các doanh nghiệp lớn</p>
             </div>
-            <a href="#" class="text-blue-600 font-semibold hover:underline flex items-center">
-                Xem tất cả 
-                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-            </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <c:forEach items="${featuredJobs}" var="job">
-                <div class="bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-xl transition-shadow duration-300 group">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 border border-gray-100">
-                            <c:choose>
-                                <c:when test="${not empty job.logoPath}">
-                                    <img src="${job.logoPath}" alt="${job.companyName}" class="max-w-full max-h-full object-contain">
-                                </c:when>
-                                <c:otherwise>
-                                    <span class="text-xl font-bold text-blue-400">${job.companyName.substring(0, 1)}</span>
-                                </c:otherwise>
-                            </c:choose>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <c:forEach items="${hottestJobs}" var="job">
+                <div class="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-lg transition-all group">
+                    <div class="flex items-center space-x-4 mb-4">
+                         <div class="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center p-1 border border-gray-50">
+                            <img src="${not empty job.logoPath ? job.logoPath : 'https://via.placeholder.com/100'}" alt="logo" class="max-w-full max-h-full object-contain">
                         </div>
-                        <span class="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                            ${job.employmentType == 'FULL_TIME' ? 'Toàn thời gian' : job.employmentType}
-                        </span>
-                    </div>
-                    
-                    <h3 class="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition">
-                        <a href="#">${job.title}</a>
-                    </h3>
-                    <p class="text-blue-600 font-semibold text-sm mb-4">${job.companyName}</p>
-                    
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <div class="flex items-center text-gray-500 text-sm bg-gray-50 px-3 py-1 rounded-lg">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            </svg>
-                            ${job.city}
-                        </div>
-                        <div class="flex items-center text-green-600 text-sm bg-green-50 px-3 py-1 rounded-lg font-medium">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <fmt:formatNumber value="${job.salaryMin / 1000000}" pattern="#.#"/>tr - 
-                            <fmt:formatNumber value="${job.salaryMax / 1000000}" pattern="#.#"/>tr
+                        <div>
+                            <h4 class="font-bold text-gray-900 group-hover:text-blue-600 truncate w-32">${job.title}</h4>
+                            <p class="text-xs text-blue-600 font-medium">${job.companyName}</p>
                         </div>
                     </div>
-                    
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-50">
-                        <span class="text-xs text-gray-400">
-                            Đăng <fmt:formatDate value="${job.postedDate}" pattern="dd/MM/yyyy"/>
-                        </span>
-                        <a href="#" class="text-sm font-bold text-gray-700 hover:text-blue-600 transition">Chi tiết &rarr;</a>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-green-600 font-bold"><fmt:formatNumber value="${job.salaryMax / 1000000}" pattern="#.#"/>tr</span>
+                        <a href="${pageContext.request.contextPath}/jobs/${job.jobId}" class="text-gray-400 hover:text-blue-600 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
                     </div>
                 </div>
             </c:forEach>
+        </div>
+    </section>
+
+    <!-- Latest Jobs Section -->
+    <section class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">🆕 Việc Làm Mới Nhất</h2>
+                    <p class="text-gray-500">Ứng tuyển ngay để trở thành những người đầu tiên</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <c:forEach items="${latestJobs}" var="job">
+                    <div class="flex items-center p-5 border border-gray-50 rounded-2xl hover:bg-blue-50 transition cursor-pointer" onclick="location.href='${pageContext.request.contextPath}/jobs/${job.jobId}'">
+                        <div class="w-16 h-16 bg-white rounded-xl shadow-sm flex items-center justify-center p-2 mr-6 border border-gray-100">
+                             <img src="${not empty job.logoPath ? job.logoPath : 'https://via.placeholder.com/100'}" alt="logo" class="max-w-full max-h-full object-contain">
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-gray-900">${job.title}</h3>
+                            <div class="flex items-center space-x-4 text-sm text-gray-500 mt-1">
+                                <span class="flex items-center"><svg class="w-4 h-4 mr-1 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0z"></path></svg>${job.companyName}</span>
+                                <span class="flex items-center"><svg class="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>${job.city}</span>
+                            </div>
+                        </div>
+                        <div class="text-right hidden md:block">
+                            <p class="text-blue-600 font-bold"><fmt:formatNumber value="${job.salaryMin / 1000000}" pattern="#.#"/> - <fmt:formatNumber value="${job.salaryMax / 1000000}" pattern="#.#"/>tr</p>
+                            <span class="text-xs text-gray-400">Đăng <fmt:formatDate value="${job.postedDate}" pattern="dd/MM/yyyy"/></span>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
         </div>
     </section>
 </main>

@@ -75,6 +75,38 @@ public class UserDAO {
         return null;
     }
 
+    public Integer getRecruiterIdByUserId(int userId) {
+        String sql = "SELECT RecruiterID FROM RecruiterProfiles WHERE UserID = ?";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("RecruiterID");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Integer getJobSeekerIdByUserId(int userId) {
+        String sql = "SELECT JobSeekerID FROM JobSeekerProfiles WHERE UserID = ?";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("JobSeekerID");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private User mapUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt("UserID"));
