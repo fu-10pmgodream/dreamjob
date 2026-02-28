@@ -165,12 +165,12 @@ INSERT INTO SavedJobs (JobID, JobSeekerID, SavedDate) VALUES
 -- CompanyImages
 -- =============================================
 INSERT INTO CompanyImages (RecruiterID, ImagePath) VALUES
-(1, 'https://via.placeholder.com/800x400/1e40af/ffffff?text=FPT+Office+Hanoi'),
-(1, 'https://via.placeholder.com/800x400/1e40af/ffffff?text=FPT+Campus'),
-(2, 'https://via.placeholder.com/800x400/7c3aed/ffffff?text=VNG+Campus+HCM'),
-(3, 'https://via.placeholder.com/800x400/dc2626/ffffff?text=Tiki+Fulfillment'),
-(4, 'https://via.placeholder.com/800x400/16a34a/ffffff?text=Grab+Office'),
-(5, 'https://via.placeholder.com/800x400/be185d/ffffff?text=MoMo+HQ');
+(1, 'https://drive.usercontent.google.com/download?id=1qQOET_rUxrBN7SUyu-po2Dl7cWGxa7Ga&export=view&authuser=0'),
+(1, 'https://drive.usercontent.google.com/download?id=1qQOET_rUxrBN7SUyu-po2Dl7cWGxa7Ga&export=view&authuser=0'),
+(2, 'https://drive.usercontent.google.com/download?id=1qb_DBf-nAu0GEKpBh1D-39QEP4V_3SsK&export=view&authuser=0'),
+(3, 'https://drive.usercontent.google.com/download?id=1WUQrz5HaqkBT66VJNqjwlB3ZsUm62W95&export=view&authuser=0'),
+(4, 'https://drive.usercontent.google.com/download?id=13v0_WkBdMkwmc1ZiCq9dc7C1XWtX73ik&export=view&authuser=0'),
+(5, 'https://drive.usercontent.google.com/download?id=1sFLO19IabtsYTnATFfVQ6G4xOHKyAmdM&export=view&authuser=0');
 
 GO
 PRINT 'Sample data inserted successfully!';
