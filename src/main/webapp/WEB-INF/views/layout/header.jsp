@@ -32,7 +32,7 @@
                 <a href="${pageContext.request.contextPath}/" class="text-gray-600 hover:text-blue-600 font-medium transition">Trang chủ</a>
                 <a href="${pageContext.request.contextPath}/search" class="text-gray-600 hover:text-blue-600 font-medium transition">Tìm việc làm</a>
                 <c:if test="${user.role == 'RECRUITER'}">
-                    <a href="${pageContext.request.contextPath}/jobs/manage" class="text-blue-600 font-semibold hover:text-blue-700 transition">Tin tuyển dụng</a>
+                    <a href="${pageContext.request.contextPath}/jobs/manage" class="text-gray-600 font-semibold hover:text-blue-700 transition">Tin tuyển dụng</a>
                     <a href="${pageContext.request.contextPath}/applications/manage" class="text-gray-600 hover:text-blue-600 font-medium transition">Đơn ứng tuyển</a>
                 </c:if>
                 <c:if test="${user.role == 'JOBSEEKER'}">
@@ -48,12 +48,12 @@
                 <c:choose>
                     <c:when test="${not empty user}">
                         <div class="relative group">
-                            <button class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 focus:outline-none">
+                            <div class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 focus:outline-none">
                                 <span class="font-medium hidden sm:block">${user.fullName}</span>
                                 <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
                                     ${user.fullName.substring(0, 1)}
                                 </div>
-                            </button>
+                            </div>
                             <div class="absolute right-0 w-52 bg-white rounded-xl shadow-xl py-2 border border-gray-100 hidden group-hover:block z-50">
                                 <div class="px-4 py-2 border-b border-gray-50">
                                     <p class="text-sm font-bold text-gray-900">${user.fullName}</p>

@@ -45,20 +45,26 @@
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2 font-bold text-blue-600">Bạn là?</label>
                     <div class="grid grid-cols-2 gap-4 mt-2">
-                        <label class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group">
+                        <div class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group">
                             <input type="radio" name="role" value="JOBSEEKER" checked class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                             <div class="ml-3">
                                 <span class="block text-sm font-bold text-gray-900">Ứng viên</span>
                                 <span class="block text-xs text-gray-500">Tôi muốn tìm việc</span>
                             </div>
-                        </label>
-                        <label class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group">
+                        </div>
+                        <div class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group">
                             <input type="radio" name="role" value="RECRUITER" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                             <div class="ml-3">
                                 <span class="block text-sm font-bold text-gray-900">Nhà tuyển dụng</span>
                                 <span class="block text-xs text-gray-500">Tôi muốn đăng tin</span>
                             </div>
-                        </label>
+                        </div>
+                        <div class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group">
+                            <input type="radio" name="role" value="ADMIN" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                            <div class="ml-3">
+                                <span class="block text-sm font-bold text-gray-900">Admin</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
