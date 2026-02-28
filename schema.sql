@@ -133,15 +133,5 @@ CREATE TABLE SavedJobs (
     FOREIGN KEY (JobSeekerID) REFERENCES JobSeekerProfiles(JobSeekerID)
 );
 
--- =============================================
--- Table: CompanyImages
--- =============================================
-CREATE TABLE CompanyImages (
-    ImageID INT IDENTITY(1,1) PRIMARY KEY,
-    RecruiterID INT NOT NULL,
-    ImagePath VARCHAR(500) NOT NULL,
-    FOREIGN KEY (RecruiterID) REFERENCES RecruiterProfiles(RecruiterID) ON DELETE CASCADE
-);
-
 GO
 PRINT 'Schema created successfully!';

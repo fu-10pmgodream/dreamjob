@@ -64,11 +64,11 @@ INSERT INTO Users (Email, PasswordHash, FullName, Role, Phone, IsActive) VALUES
 -- RecruiterProfiles
 -- =============================================
 INSERT INTO RecruiterProfiles (UserID, CompanyName, CompanyDescription, Website, LogoPath, CompanySize, LocationID) VALUES
-(3, N'FPT Software', N'FPT Software là một trong những công ty CNTT hàng đầu Việt Nam, cung cấp dịch vụ phát triển phần mềm, outsourcing và chuyển đổi số cho khách hàng toàn cầu.', 'https://fptsoftware.com', 'https://via.placeholder.com/150/1e40af/ffffff?text=FPT', N'Trên 10,000 nhân viên', 1),
-(4, N'VNG Corporation', N'VNG là công ty công nghệ hàng đầu Việt Nam với các sản phẩm nổi tiếng như Zalo, ZaloPay, game online và dịch vụ cloud computing.', 'https://vng.com.vn', 'https://via.placeholder.com/150/7c3aed/ffffff?text=VNG', N'1,000-5,000 nhân viên', 2),
-(5, N'Tiki Corporation', N'Tiki là sàn thương mại điện tử lớn nhất Việt Nam, cung cấp dịch vụ mua sắm trực tuyến với hàng triệu sản phẩm.', 'https://tiki.vn', 'https://via.placeholder.com/150/dc2626/ffffff?text=TIKI', N'1,000-5,000 nhân viên', 2),
-(6, N'Grab Vietnam', N'Grab là ứng dụng công nghệ đa dịch vụ hàng đầu Đông Nam Á, cung cấp dịch vụ vận chuyển, giao đồ ăn và thanh toán.', 'https://grab.com', 'https://via.placeholder.com/150/16a34a/ffffff?text=GRAB', N'500-1,000 nhân viên', 2),
-(7, N'MoMo E-Wallet', N'MoMo là ứng dụng ví điện tử lớn nhất Việt Nam với hơn 31 triệu người dùng, cung cấp giải pháp thanh toán số cho mọi nhu cầu.', 'https://momo.vn', 'https://via.placeholder.com/150/be185d/ffffff?text=MoMo', N'500-1,000 nhân viên', 2);
+(3, N'FPT Software', N'FPT Software là một trong những công ty CNTT hàng đầu Việt Nam, cung cấp dịch vụ phát triển phần mềm, outsourcing và chuyển đổi số cho khách hàng toàn cầu.', 'https://fptsoftware.com', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/500px-FPT_logo_2010.svg.png', N'Trên 10,000 nhân viên', 1),
+(4, N'VNG Corporation', N'VNG là công ty công nghệ hàng đầu Việt Nam với các sản phẩm nổi tiếng như Zalo, ZaloPay, game online và dịch vụ cloud computing.', 'https://vng.com.vn', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/VNG_Corp._logo.svg/330px-VNG_Corp._logo.svg.png', N'1,000-5,000 nhân viên', 2),
+(5, N'Tiki Corporation', N'Tiki là sàn thương mại điện tử lớn nhất Việt Nam, cung cấp dịch vụ mua sắm trực tuyến với hàng triệu sản phẩm.', 'https://tiki.vn', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Logo_Tiki_2023.png/500px-Logo_Tiki_2023.png', N'1,000-5,000 nhân viên', 2),
+(6, N'Grab Vietnam', N'Grab là ứng dụng công nghệ đa dịch vụ hàng đầu Đông Nam Á, cung cấp dịch vụ vận chuyển, giao đồ ăn và thanh toán.', 'https://grab.com', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Grab_Logo.svg/500px-Grab_Logo.svg.png', N'500-1,000 nhân viên', 2),
+(7, N'MoMo E-Wallet', N'MoMo là ứng dụng ví điện tử lớn nhất Việt Nam với hơn 31 triệu người dùng, cung cấp giải pháp thanh toán số cho mọi nhu cầu.', 'https://momo.vn', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/MoMo_Logo_App.svg/500px-MoMo_Logo_App.svg.png', N'500-1,000 nhân viên', 2);
 
 -- =============================================
 -- JobSeekerProfiles
@@ -160,17 +160,6 @@ INSERT INTO SavedJobs (JobID, JobSeekerID, SavedDate) VALUES
 (14, 6, '2026-01-12'),
 (17, 2, '2026-02-12'),
 (20, 1, '2026-02-14');
-
--- =============================================
--- CompanyImages
--- =============================================
-INSERT INTO CompanyImages (RecruiterID, ImagePath) VALUES
-(1, 'https://via.placeholder.com/800x400/1e40af/ffffff?text=FPT+Office+Hanoi'),
-(1, 'https://via.placeholder.com/800x400/1e40af/ffffff?text=FPT+Campus'),
-(2, 'https://via.placeholder.com/800x400/7c3aed/ffffff?text=VNG+Campus+HCM'),
-(3, 'https://via.placeholder.com/800x400/dc2626/ffffff?text=Tiki+Fulfillment'),
-(4, 'https://via.placeholder.com/800x400/16a34a/ffffff?text=Grab+Office'),
-(5, 'https://via.placeholder.com/800x400/be185d/ffffff?text=MoMo+HQ');
 
 GO
 PRINT 'Sample data inserted successfully!';
