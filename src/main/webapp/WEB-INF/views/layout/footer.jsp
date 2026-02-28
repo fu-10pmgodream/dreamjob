@@ -16,9 +16,9 @@
             <div>
                 <h4 class="text-lg font-semibold mb-4">Dành cho ứng viên</h4>
                 <ul class="space-y-2 text-gray-400">
-                    <li><a href="#" class="hover:text-blue-500 transition">Tìm việc làm</a></li>
-                    <li><a href="#" class="hover:text-blue-500 transition">Việc làm đã lưu</a></li>
-                    <li><a href="#" class="hover:text-blue-500 transition">Cẩm nang nghề nghiệp</a></li>
+                    <li><a href="/search" class="hover:text-blue-500 transition">Tìm việc làm</a></li>
+                    <li><a href="/saved-jobs" class="hover:text-blue-500 transition">Việc làm đã lưu</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=PD61lIYrG-M" target="_blank"  class="hover:text-blue-500 transition">Cẩm nang nghề nghiệp</a></li>
                 </ul>
             </div>
             <div>

@@ -32,7 +32,7 @@
                 <a href="${pageContext.request.contextPath}/" class="text-gray-600 hover:text-blue-600 font-medium transition">Trang chủ</a>
                 <a href="${pageContext.request.contextPath}/search" class="text-gray-600 hover:text-blue-600 font-medium transition">Tìm việc làm</a>
                 <c:if test="${user.role == 'RECRUITER'}">
-                    <a href="${pageContext.request.contextPath}/jobs/manage" class="text-blue-600 font-semibold hover:text-blue-700 transition">Tin tuyển dụng</a>
+                    <a href="${pageContext.request.contextPath}/jobs/manage" class="text-gray-600 font-semibold hover:text-blue-700 transition">Tin tuyển dụng</a>
                     <a href="${pageContext.request.contextPath}/applications/manage" class="text-gray-600 hover:text-blue-600 font-medium transition">Đơn ứng tuyển</a>
                 </c:if>
                 <c:if test="${user.role == 'JOBSEEKER'}">
