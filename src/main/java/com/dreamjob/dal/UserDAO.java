@@ -75,6 +75,22 @@ public class UserDAO {
         return null;
     }
 
+    public User findByPhone(String phone) {
+        String sql = "SELECT * FROM Users WHERE Phone = ?";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, phone);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapUser(rs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public Integer getRecruiterIdByUserId(int userId) {
         String sql = "SELECT RecruiterID FROM RecruiterProfiles WHERE UserID = ?";
         try (Connection con = dbContext.getConnection();

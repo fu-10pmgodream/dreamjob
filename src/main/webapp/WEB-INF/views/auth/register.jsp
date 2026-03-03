@@ -28,7 +28,12 @@
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Số điện thoại</label>
-                        <input type="text" name="phone" class="block w-full px-4 py-3 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition sm:text-sm" placeholder="0901234567">
+                        <input type="tel" name="phone" required
+                               pattern="\d{10}" maxlength="10"
+                               class="block w-full px-4 py-3 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition sm:text-sm"
+                               placeholder="0901234567"
+                               title="Số điện thoại phải gồm đúng 10 chữ số"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     </div>
                 </div>
 
@@ -44,27 +49,27 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2 font-bold text-blue-600">Bạn là?</label>
-                    <div class="grid grid-cols-2 gap-4 mt-2">
-                        <div class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group">
-                            <input type="radio" name="role" value="JOBSEEKER" checked class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                <div class="grid grid-cols-2 gap-4 mt-2">
+                        <label for="role-jobseeker" class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+                            <input type="radio" id="role-jobseeker" name="role" value="JOBSEEKER" checked class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                             <div class="ml-3">
                                 <span class="block text-sm font-bold text-gray-900">Ứng viên</span>
                                 <span class="block text-xs text-gray-500">Tôi muốn tìm việc</span>
                             </div>
-                        </div>
-                        <div class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group">
-                            <input type="radio" name="role" value="RECRUITER" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                        </label>
+                        <label for="role-recruiter" class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+                            <input type="radio" id="role-recruiter" name="role" value="RECRUITER" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                             <div class="ml-3">
                                 <span class="block text-sm font-bold text-gray-900">Nhà tuyển dụng</span>
                                 <span class="block text-xs text-gray-500">Tôi muốn đăng tin</span>
                             </div>
-                        </div>
-                        <div class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group">
-                            <input type="radio" name="role" value="ADMIN" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                        </label>
+                        <label for="role-admin" class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+                            <input type="radio" id="role-admin" name="role" value="ADMIN" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                             <div class="ml-3">
                                 <span class="block text-sm font-bold text-gray-900">Admin</span>
                             </div>
-                        </div>
+                        </label>
                     </div>
                 </div>
 

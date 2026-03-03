@@ -64,9 +64,10 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <c:forEach items="${hottestJobs}" var="job">
-                <div class="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-lg transition-all group">
+                <a href="${pageContext.request.contextPath}/jobs/${job.jobId}"
+                   class="block bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-lg hover:border-blue-200 transition-all group cursor-pointer">
                     <div class="flex items-center space-x-4 mb-4">
-                         <div class="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center p-1 border border-gray-50">
+                        <div class="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center p-1 border border-gray-50">
                             <img src="${not empty job.logoPath ? job.logoPath : 'https://via.placeholder.com/100'}" alt="logo" class="max-w-full max-h-full object-contain">
                         </div>
                         <div>
@@ -76,11 +77,11 @@
                     </div>
                     <div class="flex justify-between items-center text-sm">
                         <span class="text-green-600 font-bold"><fmt:formatNumber value="${job.salaryMax / 1000000}" pattern="#.#"/>tr</span>
-                        <a href="${pageContext.request.contextPath}/jobs/${job.jobId}" class="text-gray-400 hover:text-blue-600 transition">
+                        <span class="text-gray-400 group-hover:text-blue-600 transition">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </a>
+                        </span>
                     </div>
-                </div>
+                </a>
             </c:forEach>
         </div>
     </section>

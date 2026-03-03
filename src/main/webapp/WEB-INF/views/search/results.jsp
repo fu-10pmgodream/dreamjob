@@ -33,12 +33,12 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-3">Danh mục</label>
                         <div class="space-y-2 max-h-48 overflow-y-auto">
-                            <label class="flex items-center">
-                                <input type="radio" name="categoryId" value="" ${empty selectedCategory ? 'checked' : ''} class="mr-2 text-blue-600"> <span class="text-sm">Tất cả</span>
+                            <label class="flex items-center gap-2 cursor-pointer select-none py-1 px-2 rounded-lg hover:bg-blue-50 transition">
+                                <input type="radio" name="categoryId" value="" ${empty selectedCategory ? 'checked' : ''} class="text-blue-600"> <span class="text-sm">Tất cả</span>
                             </label>
                             <c:forEach items="${categories}" var="cat">
-                                <label class="flex items-center">
-                                    <input type="radio" name="categoryId" value="${cat.categoryId}" ${selectedCategory == cat.categoryId.toString() ? 'checked' : ''} class="mr-2 text-blue-600"> <span class="text-sm">${cat.categoryName}</span>
+                                <label class="flex items-center gap-2 cursor-pointer select-none py-1 px-2 rounded-lg hover:bg-blue-50 transition">
+                                    <input type="radio" name="categoryId" value="${cat.categoryId}" ${selectedCategory == cat.categoryId.toString() ? 'checked' : ''} class="text-blue-600"> <span class="text-sm">${cat.categoryName}</span>
                                 </label>
                             </c:forEach>
                         </div>
@@ -49,8 +49,8 @@
                         <div class="space-y-2">
                             <c:set var="types" value="${{'FULL_TIME','PART_TIME','CONTRACT','INTERNSHIP','REMOTE'}}"/>
                             <c:forEach items="${types}" var="t">
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="employmentType" value="${t}" ${selectedType == t ? 'checked' : ''} class="mr-2 text-blue-600">
+                                <label class="flex items-center gap-2 cursor-pointer select-none py-1 px-2 rounded-lg hover:bg-blue-50 transition">
+                                    <input type="checkbox" name="employmentType" value="${t}" ${selectedType == t ? 'checked' : ''} class="text-blue-600">
                                     <span class="text-sm">${t == 'FULL_TIME' ? 'Toàn thời gian' : t == 'PART_TIME' ? 'Bán thời gian' : t == 'CONTRACT' ? 'Hợp đồng' : t == 'INTERNSHIP' ? 'Thực tập' : 'Remote'}</span>
                                 </label>
                             </c:forEach>

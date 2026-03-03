@@ -64,8 +64,19 @@ public class AuthController {
             @RequestParam String phone,
             Model model) {
 
+        // Validate số điện thoại phải có đúng 10 chữ số
+        if (phone == null || !phone.matches("\\d{10}")) {
+            model.addAttribute("error", "Số điện thoại phải có đúng 10 chữ số!");
+            return "auth/register";
+        }
+
         if (userDAO.findByEmail(email) != null) {
-            model.addAttribute("error", "Email đã tồn tại!");
+            model.addAttribute("error", "Email này đã được sử dụng!");
+            return "auth/register";
+        }
+
+        if (userDAO.findByPhone(phone) != null) {
+            model.addAttribute("error", "Số điện thoại này đã được sử dụng!");
             return "auth/register";
         }
 
