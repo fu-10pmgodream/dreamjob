@@ -33,14 +33,24 @@
                 </p>
                 <c:choose>
                     <c:when test="${user.role == 'JOBSEEKER'}">
-                        <c:choose>
-                            <c:when test="${hasApplied}">
-                                <button disabled class="bg-gray-400 text-white font-bold py-4 px-10 rounded-2xl cursor-not-allowed">Đã ứng tuyển</button>
-                            </c:when>
-                            <c:otherwise>
-                                <button onclick="document.getElementById('applyModal').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-2xl transition shadow-xl transform hover:-translate-y-1">Ứng tuyển ngay</button>
-                            </c:otherwise>
-                        </c:choose>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-end">
+                            <%-- Nút Lưu lại --%>
+                            <button id="saveBtn" onclick="toggleSave(${job.jobId})"
+                                class="flex items-center gap-2 font-bold py-4 px-6 rounded-2xl transition border-2
+                                       ${isSaved ? 'bg-yellow-50 border-yellow-400 text-yellow-700 hover:bg-yellow-100' : 'bg-white border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600'}">
+                                <span id="saveBtnIcon">${isSaved ? '★' : '☆'}</span>
+                                <span id="saveBtnText">${isSaved ? 'Đã lưu' : 'Lưu việc'}</span>
+                            </button>
+                            <%-- Nút Ứng tuyển --%>
+                            <c:choose>
+                                <c:when test="${hasApplied}">
+                                    <button disabled class="bg-gray-400 text-white font-bold py-4 px-10 rounded-2xl cursor-not-allowed">Đã ứng tuyển</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button onclick="document.getElementById('applyModal').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-2xl transition shadow-xl transform hover:-translate-y-1">Ứng tuyển ngay</button>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </c:when>
                     <c:when test="${empty user}">
                         <a href="${pageContext.request.contextPath}/login" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-10 rounded-2xl transition shadow-xl block text-center">Đăng nhập để ứng tuyển</a>
@@ -137,5 +147,39 @@
         </div>
     </div>
 </main>
+
+<c:if test="${user.role == 'JOBSEEKER'}">
+<script>
+function toggleSave(jobId) {
+    const contextPath = '${pageContext.request.contextPath}';
+    const btn = document.getElementById('saveBtn');
+    const icon = document.getElementById('saveBtnIcon');
+    const text = document.getElementById('saveBtnText');
+    btn.disabled = true;
+    fetch(contextPath + '/saved-jobs/toggle', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'jobId=' + jobId
+    }).then(r => r.text()).then(res => {
+        if (res === 'saved') {
+            icon.textContent = '★';
+            text.textContent = 'Đã lưu';
+            btn.className = btn.className
+                .replace('bg-white border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600',
+                         'bg-yellow-50 border-yellow-400 text-yellow-700 hover:bg-yellow-100');
+        } else if (res === 'unsaved') {
+            icon.textContent = '☆';
+            text.textContent = 'Lưu việc';
+            btn.className = btn.className
+                .replace('bg-yellow-50 border-yellow-400 text-yellow-700 hover:bg-yellow-100',
+                         'bg-white border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600');
+        } else {
+            alert('Có lỗi xảy ra, vui lòng đăng nhập lại!');
+        }
+        btn.disabled = false;
+    }).catch(() => { btn.disabled = false; });
+}
+</script>
+</c:if>
 
 <c:import url="../layout/footer.jsp" />

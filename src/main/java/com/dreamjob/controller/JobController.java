@@ -2,6 +2,7 @@ package com.dreamjob.controller;
 
 import com.dreamjob.dal.ApplicationDAO;
 import com.dreamjob.dal.JobDAO;
+import com.dreamjob.dal.SavedJobDAO;
 import com.dreamjob.dal.UserDAO;
 import com.dreamjob.model.Job;
 import com.dreamjob.model.User;
@@ -29,6 +30,9 @@ public class JobController {
     private ApplicationDAO applicationDAO;
 
     @Autowired
+    private SavedJobDAO savedJobDAO;
+
+    @Autowired
     private CloudinaryService cloudinaryService;
 
     // View Job Details
@@ -45,6 +49,7 @@ public class JobController {
             Integer seekerId = userDAO.getJobSeekerIdByUserId(user.getUserId());
             if (seekerId != null) {
                 model.addAttribute("hasApplied", applicationDAO.hasApplied(id, seekerId));
+                model.addAttribute("isSaved", savedJobDAO.isSaved(id, seekerId));
             }
         }
 
