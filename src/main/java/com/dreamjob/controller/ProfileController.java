@@ -1,6 +1,7 @@
 package com.dreamjob.controller;
 
 import com.dreamjob.dal.ProfileDAO;
+import com.dreamjob.dal.SearchDAO;
 import com.dreamjob.dal.UserDAO;
 import com.dreamjob.model.JobSeekerProfile;
 import com.dreamjob.model.RecruiterProfile;
@@ -23,12 +24,33 @@ public class ProfileController {
     private UserDAO userDAO;
     @Autowired
     private CloudinaryService cloudinaryService;
+    @Autowired
+    private SearchDAO searchDAO;
 
+    // ─── Helper: trim safely ───────────────────────────────────────────────
+    private static String trim(String s) {
+        return s != null ? s.trim() : "";
+    }
+
+    /**
+     * Returns error message if an already-filled field is being cleared, else null.
+     */
+    private static String notEmptyIfFilled(String existingValue, String newValue, String fieldLabel) {
+        boolean hadValue = existingValue != null && !existingValue.trim().isEmpty();
+        if (hadValue && newValue.trim().isEmpty()) {
+            return fieldLabel + " đã được điền, không được phép xóa!";
+        }
+        return null;
+    }
+
+    // ─── GET /profile ───────────────────────────────────────────────────────
     @GetMapping
     public String viewProfile(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user == null)
             return "redirect:/login";
+
+        model.addAttribute("locations", searchDAO.getAllLocations());
 
         if ("RECRUITER".equals(user.getRole())) {
             RecruiterProfile profile = profileDAO.getRecruiterProfileByUserId(user.getUserId());
@@ -42,6 +64,7 @@ public class ProfileController {
         return "redirect:/";
     }
 
+    // ─── POST /profile/recruiter/update ────────────────────────────────────
     @PostMapping("/recruiter/update")
     public String updateRecruiterProfile(
             @RequestParam String companyName,
@@ -58,38 +81,64 @@ public class ProfileController {
         if (user == null || !"RECRUITER".equals(user.getRole()))
             return "redirect:/login";
 
+        // Load existing profile from DB (source of truth for "had value" checks)
         RecruiterProfile profile = profileDAO.getRecruiterProfileByUserId(user.getUserId());
         if (profile == null) {
             profile = new RecruiterProfile();
             profile.setUserId(user.getUserId());
         }
 
-        profile.setCompanyName(companyName);
-        profile.setCompanyDescription(companyDescription);
-        profile.setWebsite(website);
-        profile.setCompanySize(companySize);
+        // ── Validate: trim + "cannot clear if already filled" ──────────────
+        String[] checks = {
+                notEmptyIfFilled(profile.getCompanyName(), trim(companyName), "Tên công ty"),
+                notEmptyIfFilled(user.getFullName(), trim(fullName), "Họ và tên"),
+                notEmptyIfFilled(user.getPhone(), trim(phone), "Số điện thoại"),
+                notEmptyIfFilled(profile.getWebsite(), trim(website), "Website"),
+                notEmptyIfFilled(profile.getCompanySize(), companySize, "Quy mô công ty"),
+                notEmptyIfFilled(profile.getCompanyDescription(), trim(companyDescription), "Mô tả công ty"),
+        };
+        // LocationId: "had value" when > 0; "new value" is empty when blank/not
+        // selected
+        if (profile.getLocationId() > 0 && (locationId == null || locationId.isBlank())) {
+            checks = appendError(checks, "Địa điểm đã được chọn, không được phép xóa!");
+        }
+
+        for (String err : checks) {
+            if (err != null) {
+                model.addAttribute("error", err);
+                model.addAttribute("profile", profile);
+                model.addAttribute("locations", searchDAO.getAllLocations());
+                return "profile/recruiter";
+            }
+        }
+
+        // ── Apply values ────────────────────────────────────────────────────
+        profile.setCompanyName(trim(companyName));
+        profile.setCompanyDescription(trim(companyDescription).isEmpty() ? null : trim(companyDescription));
+        profile.setWebsite(trim(website).isEmpty() ? null : trim(website));
+        profile.setCompanySize((companySize != null && !companySize.isBlank()) ? companySize : null);
         if (locationId != null && !locationId.isBlank()) {
             profile.setLocationId(Integer.parseInt(locationId));
         }
 
         if (logoFile != null && !logoFile.isEmpty()) {
-            String logoUrl = cloudinaryService.uploadImage(logoFile, "logos");
-            profile.setLogoPath(logoUrl);
+            profile.setLogoPath(cloudinaryService.uploadImage(logoFile, "logos"));
         } else {
             profile.setLogoPath(null); // signal: don't update logo
         }
 
-        if (profileDAO.upsertRecruiterProfile(profile, fullName, phone)) {
-            // Refresh session user
+        if (profileDAO.upsertRecruiterProfile(profile, trim(fullName), trim(phone).isEmpty() ? null : trim(phone))) {
             User updated = userDAO.findByEmail(user.getEmail());
             session.setAttribute("user", updated);
             return "redirect:/profile?success=true";
         }
         model.addAttribute("error", "Cập nhật thất bại!");
         model.addAttribute("profile", profile);
+        model.addAttribute("locations", searchDAO.getAllLocations());
         return "profile/recruiter";
     }
 
+    // ─── POST /profile/seeker/update ───────────────────────────────────────
     @PostMapping("/seeker/update")
     public String updateSeekerProfile(
             @RequestParam(required = false) String title,
@@ -106,34 +155,65 @@ public class ProfileController {
         if (user == null || !"JOBSEEKER".equals(user.getRole()))
             return "redirect:/login";
 
+        // Load existing profile from DB
         JobSeekerProfile profile = profileDAO.getSeekerProfileByUserId(user.getUserId());
         if (profile == null) {
             profile = new JobSeekerProfile();
             profile.setUserId(user.getUserId());
         }
 
-        profile.setTitle(title);
-        profile.setSkills(skills);
+        // ── Validate: trim + "cannot clear if already filled" ──────────────
+        String[] checks = {
+                notEmptyIfFilled(user.getFullName(), trim(fullName), "Họ và tên"),
+                notEmptyIfFilled(user.getPhone(), trim(phone), "Số điện thoại"),
+                notEmptyIfFilled(profile.getTitle(), trim(title), "Chức danh"),
+                notEmptyIfFilled(profile.getSkills(), trim(skills), "Kỹ năng"),
+                notEmptyIfFilled(profile.getEducation(), trim(education), "Học vấn"),
+        };
+        if (profile.getLocationId() > 0 && (locationId == null || locationId.isBlank())) {
+            checks = appendError(checks, "Địa điểm đã được chọn, không được phép xóa!");
+        }
+
+        for (String err : checks) {
+            if (err != null) {
+                model.addAttribute("error", err);
+                model.addAttribute("profile", profile);
+                model.addAttribute("locations", searchDAO.getAllLocations());
+                return "profile/seeker";
+            }
+        }
+
+        // ── Apply values ────────────────────────────────────────────────────
+        profile.setTitle(trim(title).isEmpty() ? null : trim(title));
+        profile.setSkills(trim(skills).isEmpty() ? null : trim(skills));
         profile.setExperienceYears(experienceYears);
-        profile.setEducation(education);
+        profile.setEducation(trim(education).isEmpty() ? null : trim(education));
         if (locationId != null && !locationId.isBlank()) {
             profile.setLocationId(Integer.parseInt(locationId));
         }
 
         if (cvFile != null && !cvFile.isEmpty()) {
-            String cvUrl = cloudinaryService.uploadImage(cvFile, "cvs");
-            profile.setCvPath(cvUrl);
+            profile.setCvPath(cloudinaryService.uploadImage(cvFile, "cvs"));
         } else {
             profile.setCvPath(null);
         }
 
-        if (profileDAO.upsertSeekerProfile(profile, fullName, phone)) {
+        if (profileDAO.upsertSeekerProfile(profile, trim(fullName), trim(phone).isEmpty() ? null : trim(phone))) {
             User updated = userDAO.findByEmail(user.getEmail());
             session.setAttribute("user", updated);
             return "redirect:/profile?success=true";
         }
         model.addAttribute("error", "Cập nhật thất bại!");
         model.addAttribute("profile", profile);
+        model.addAttribute("locations", searchDAO.getAllLocations());
         return "profile/seeker";
+    }
+
+    // ─── Utility ───────────────────────────────────────────────────────────
+    private static String[] appendError(String[] arr, String msg) {
+        String[] newArr = new String[arr.length + 1];
+        System.arraycopy(arr, 0, newArr, 0, arr.length);
+        newArr[arr.length] = msg;
+        return newArr;
     }
 }
