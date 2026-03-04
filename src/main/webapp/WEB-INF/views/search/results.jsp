@@ -60,8 +60,13 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-3">Mức lương (VND)</label>
                         <div class="space-y-3">
-                            <input type="number" name="salaryMin" value="${salaryMin}" placeholder="Từ (VD: 10000000)" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <input type="number" name="salaryMax" value="${salaryMax}" placeholder="Đến (VD: 50000000)" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <input type="number" name="salaryMin" id="salaryMin" value="${salaryMin}"
+                                   min="0" placeholder="Từ (VD: 10000000)"
+                                   class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <input type="number" name="salaryMax" id="salaryMax" value="${salaryMax}"
+                                   min="0" placeholder="Đến (VD: 50000000)"
+                                   class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <div id="salaryErr" class="text-xs text-red-500 hidden"></div>
                         </div>
                     </div>
 
@@ -75,7 +80,8 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition">Áp dụng bộ lọc</button>
+                    <button type="submit" onclick="return validateSalary()"
+                            class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition">Áp dụng bộ lọc</button>
                     <a href="${pageContext.request.contextPath}/search" class="block text-center text-sm text-gray-500 hover:text-blue-600 transition">Xóa bộ lọc</a>
                 </form>
             </aside>
@@ -169,13 +175,44 @@ function toggleSave(btn, jobId) {
             btn.classList.remove('bg-yellow-100','text-yellow-700');
             btn.classList.add('bg-gray-100','text-gray-600');
         } else if (res === 'error') {
-            alert("Lỗi: Không tìm thấy hồ sơ người tìm việc hoặc bạn cấn đăng nhập lại!");
+            alert("Lỗi: Không tìm thấy hồ sơ người tìm việc hoặc bạn cần đăng nhập lại!");
         } else {
             console.log("Server response:", res);
         }
     }).catch(err => {
         console.error('Fetch error:', err);
     });
+}
+
+function validateSalary() {
+    const minEl = document.getElementById('salaryMin');
+    const maxEl = document.getElementById('salaryMax');
+    const errEl = document.getElementById('salaryErr');
+    errEl.classList.add('hidden');
+
+    const minVal = minEl.value.trim();
+    const maxVal = maxEl.value.trim();
+    if (minVal === '' && maxVal === '') return true; // cả hai rỗng thì bỏ qua
+
+    const min = parseFloat(minVal);
+    const max = parseFloat(maxVal);
+
+    if (minVal !== '' && min < 0) {
+        errEl.textContent = 'Lương tối thiểu phải là số dương!';
+        errEl.classList.remove('hidden');
+        return false;
+    }
+    if (maxVal !== '' && max < 0) {
+        errEl.textContent = 'Lương tối đa phải là số dương!';
+        errEl.classList.remove('hidden');
+        return false;
+    }
+    if (minVal !== '' && maxVal !== '' && max <= min) {
+        errEl.textContent = 'Lương tối đa phải lớn hơn lương tối thiểu!';
+        errEl.classList.remove('hidden');
+        return false;
+    }
+    return true;
 }
 </script>
 

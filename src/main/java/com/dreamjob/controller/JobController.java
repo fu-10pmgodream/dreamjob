@@ -3,6 +3,7 @@ package com.dreamjob.controller;
 import com.dreamjob.dal.ApplicationDAO;
 import com.dreamjob.dal.JobDAO;
 import com.dreamjob.dal.SavedJobDAO;
+import com.dreamjob.dal.SearchDAO;
 import com.dreamjob.dal.UserDAO;
 import com.dreamjob.model.Job;
 import com.dreamjob.model.User;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Controller
@@ -31,6 +33,9 @@ public class JobController {
 
     @Autowired
     private SavedJobDAO savedJobDAO;
+
+    @Autowired
+    private SearchDAO searchDAO;
 
     @Autowired
     private CloudinaryService cloudinaryService;
@@ -100,16 +105,20 @@ public class JobController {
     }
 
     @GetMapping("/create")
-    public String createForm(HttpSession session) {
+    public String createForm(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user == null || !"RECRUITER".equals(user.getRole())) {
             return "redirect:/login";
         }
+        model.addAttribute("categories", searchDAO.getAllCategories());
+        model.addAttribute("locations", searchDAO.getAllLocations());
         return "recruiter/job-form";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Job job, HttpSession session) {
+    public String create(@ModelAttribute Job job,
+            @RequestParam(required = false) String expiredDateStr,
+            HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user == null || !"RECRUITER".equals(user.getRole())) {
             return "redirect:/login";
@@ -117,10 +126,15 @@ public class JobController {
         Integer recruiterId = userDAO.getRecruiterIdByUserId(user.getUserId());
         job.setRecruiterId(recruiterId);
         job.setStatus("ACTIVE");
+        if (expiredDateStr != null && !expiredDateStr.isBlank()) {
+            job.setExpiredDate(Timestamp.valueOf(expiredDateStr + " 23:59:59"));
+        }
 
         if (jobDAO.createJob(job)) {
             return "redirect:/jobs/manage?success=created";
         }
+        model.addAttribute("categories", searchDAO.getAllCategories());
+        model.addAttribute("locations", searchDAO.getAllLocations());
         return "recruiter/job-form";
     }
 
@@ -138,21 +152,31 @@ public class JobController {
         }
 
         model.addAttribute("job", job);
+        model.addAttribute("categories", searchDAO.getAllCategories());
+        model.addAttribute("locations", searchDAO.getAllLocations());
         return "recruiter/job-form";
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute Job job, HttpSession session) {
+    public String edit(@ModelAttribute Job job,
+            @RequestParam(required = false) String expiredDateStr,
+            HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user == null || !"RECRUITER".equals(user.getRole())) {
             return "redirect:/login";
         }
         Integer recruiterId = userDAO.getRecruiterIdByUserId(user.getUserId());
         job.setRecruiterId(recruiterId);
+        job.setStatus("ACTIVE");
+        if (expiredDateStr != null && !expiredDateStr.isBlank()) {
+            job.setExpiredDate(Timestamp.valueOf(expiredDateStr + " 23:59:59"));
+        }
 
         if (jobDAO.updateJob(job)) {
             return "redirect:/jobs/manage?success=updated";
         }
+        model.addAttribute("categories", searchDAO.getAllCategories());
+        model.addAttribute("locations", searchDAO.getAllLocations());
         return "recruiter/job-form";
     }
 
