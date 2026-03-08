@@ -7,7 +7,7 @@ import com.dreamjob.dal.SearchDAO;
 import com.dreamjob.dal.UserDAO;
 import com.dreamjob.model.Job;
 import com.dreamjob.model.User;
-import com.dreamjob.service.CloudinaryService;
+import com.dreamjob.service.FileStorageService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class JobController {
     private SearchDAO searchDAO;
 
     @Autowired
-    private CloudinaryService cloudinaryService;
+    private FileStorageService fileStorageService;
 
     // View Job Details
     @GetMapping("/{id}")
@@ -78,7 +78,7 @@ public class JobController {
 
         String cvUrl = null;
         if (cvFile != null && !cvFile.isEmpty()) {
-            cvUrl = cloudinaryService.uploadImage(cvFile, "cvs");
+            cvUrl = fileStorageService.uploadFile(cvFile, "cvs");
         }
 
         if (applicationDAO.apply(jobId, seekerId, coverLetter, cvUrl)) {

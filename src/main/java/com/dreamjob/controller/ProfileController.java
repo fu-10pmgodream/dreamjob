@@ -6,7 +6,7 @@ import com.dreamjob.dal.UserDAO;
 import com.dreamjob.model.JobSeekerProfile;
 import com.dreamjob.model.RecruiterProfile;
 import com.dreamjob.model.User;
-import com.dreamjob.service.CloudinaryService;
+import com.dreamjob.service.FileStorageService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class ProfileController {
     @Autowired
     private UserDAO userDAO;
     @Autowired
-    private CloudinaryService cloudinaryService;
+    private FileStorageService fileStorageService;
     @Autowired
     private SearchDAO searchDAO;
 
@@ -122,7 +122,7 @@ public class ProfileController {
         }
 
         if (logoFile != null && !logoFile.isEmpty()) {
-            profile.setLogoPath(cloudinaryService.uploadImage(logoFile, "logos"));
+            profile.setLogoPath(fileStorageService.uploadFile(logoFile, "logos"));
         } else {
             profile.setLogoPath(null); // signal: don't update logo
         }
@@ -193,7 +193,7 @@ public class ProfileController {
         }
 
         if (cvFile != null && !cvFile.isEmpty()) {
-            profile.setCvPath(cloudinaryService.uploadImage(cvFile, "cvs"));
+            profile.setCvPath(fileStorageService.uploadFile(cvFile, "cvs"));
         } else {
             profile.setCvPath(null);
         }

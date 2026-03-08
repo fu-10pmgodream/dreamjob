@@ -34,3 +34,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Local uploads (bỏ qua file thực tế, chỉ giữ cấu trúc thư mục qua .gitkeep) ###
+uploads/**
+!uploads/**/.gitkeep
