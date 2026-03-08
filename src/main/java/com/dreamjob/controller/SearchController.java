@@ -37,10 +37,10 @@ public class SearchController {
             @RequestParam(defaultValue = "1") int page,
             HttpSession session, Model model) {
 
-        List<Job> jobs = searchDAO.searchJobs(keyword.trim(), categoryId, locationId,
+        List<Job> jobs = searchDAO.searchJobs(keyword, categoryId, locationId,
                 salaryMin, salaryMax, employmentType, sortBy, page, PAGE_SIZE);
 
-        int totalJobs = searchDAO.countSearch(keyword.trim(), categoryId, locationId, salaryMin, salaryMax, employmentType);
+        int totalJobs = searchDAO.countSearch(keyword, categoryId, locationId, salaryMin, salaryMax, employmentType);
         int totalPages = (int) Math.ceil((double) totalJobs / PAGE_SIZE);
 
         // Get saved job IDs for current seeker
@@ -59,7 +59,7 @@ public class SearchController {
         model.addAttribute("categories", searchDAO.getAllCategories());
         model.addAttribute("locations", searchDAO.getAllLocations());
         // Preserve filter params
-        model.addAttribute("keyword", keyword.trim());
+        model.addAttribute("keyword", keyword);
         model.addAttribute("selectedCategory", categoryId);
         model.addAttribute("selectedLocation", locationId);
         model.addAttribute("salaryMin", salaryMin);
