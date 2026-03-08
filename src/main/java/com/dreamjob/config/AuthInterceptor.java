@@ -19,30 +19,32 @@ public class AuthInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession(false);
 
         // Chưa đăng nhập
-        if (session == null || session.getAttribute("currentUser") == null) {
-            response.sendRedirect(request.getContextPath() + "/auth/login?redirected=true");
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect(request.getContextPath() + "/login?redirected=true");
             return false;
         }
 
-        User user = (User) session.getAttribute("currentUser");
+        User user = (User) session.getAttribute("user");
         String requestURI = request.getRequestURI();
         String contextPath = request.getContextPath();
 
         // Kiểm tra quyền theo route
-//        if (requestURI.startsWith(contextPath + "/admin/") && !user.isAdmin()) {
-//            response.sendRedirect(contextPath + "/home?error=forbidden");
-//            return false;
-//        }
-//
-//        if (requestURI.startsWith(contextPath + "/recruiter/") && !user.isRecruiter()) {
-//            response.sendRedirect(contextPath + "/home?error=forbidden");
-//            return false;
-//        }
-//
-//        if (requestURI.startsWith(contextPath + "/jobseeker/") && !user.isJobSeeker()) {
-//            response.sendRedirect(contextPath + "/home?error=forbidden");
-//            return false;
-//        }
+        // if (requestURI.startsWith(contextPath + "/admin/") && !user.isAdmin()) {
+        // response.sendRedirect(contextPath + "/home?error=forbidden");
+        // return false;
+        // }
+        //
+        // if (requestURI.startsWith(contextPath + "/recruiter/") &&
+        // !user.isRecruiter()) {
+        // response.sendRedirect(contextPath + "/home?error=forbidden");
+        // return false;
+        // }
+        //
+        // if (requestURI.startsWith(contextPath + "/jobseeker/") &&
+        // !user.isJobSeeker()) {
+        // response.sendRedirect(contextPath + "/home?error=forbidden");
+        // return false;
+        // }
 
         return true;
     }
