@@ -35,8 +35,16 @@
 </aside>
 
 <div class="ml-64 flex-grow p-8">
-    <h1 class="text-3xl font-extrabold text-gray-900 mb-8">Quản lý người dùng</h1>
 
+    <%-- Header row --%>
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-extrabold text-gray-900">Quản lý người dùng</h1>
+            <p class="text-sm text-gray-500 mt-1">Tổng cộng <span class="font-bold text-blue-600">${totalUsers}</span> người dùng</p>
+        </div>
+    </div>
+
+    <%-- Table --%>
     <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -52,8 +60,8 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-100">
                 <c:forEach items="${users}" var="u">
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-sm text-gray-500">${u.userId}</td>
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4 text-sm text-gray-400">#${u.userId}</td>
                         <td class="px-6 py-4 font-semibold text-gray-900">${u.fullName}</td>
                         <td class="px-6 py-4 text-sm text-gray-600">${u.email}</td>
                         <td class="px-6 py-4">
@@ -74,6 +82,7 @@
                             <c:if test="${u.role != 'ADMIN'}">
                                 <form action="${pageContext.request.contextPath}/admin/users/toggle" method="POST" class="inline">
                                     <input type="hidden" name="userId" value="${u.userId}">
+                                    <input type="hidden" name="page"   value="${currentPage}">
                                     <button type="submit" class="text-xs font-bold px-3 py-2 rounded-lg transition
                                         ${u.active ? 'bg-red-50 text-red-600 hover:bg-red-100' : 'bg-green-50 text-green-600 hover:bg-green-100'}">
                                         ${u.active ? 'Khóa' : 'Mở khóa'}
@@ -85,6 +94,61 @@
                 </c:forEach>
             </tbody>
         </table>
+
+        <%-- Pagination bar --%>
+        <c:if test="${totalPages > 1}">
+            <div class="flex items-center justify-between px-6 py-4 border-t border-gray-100 bg-gray-50">
+
+                <%-- Info --%>
+                <p class="text-sm text-gray-500">
+                    Trang <span class="font-semibold text-gray-800">${currentPage}</span>
+                    / <span class="font-semibold text-gray-800">${totalPages}</span>
+                </p>
+
+                <%-- Buttons --%>
+                <div class="flex items-center gap-1">
+
+                    <%-- First --%>
+                    <c:choose>
+                        <c:when test="${currentPage > 1}">
+                            <a href="?page=1" class="px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-200 transition font-medium" title="Trang đầu">«</a>
+                            <a href="?page=${currentPage - 1}" class="px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-200 transition font-medium">‹</a>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="px-3 py-2 text-sm rounded-lg text-gray-300 cursor-not-allowed font-medium">«</span>
+                            <span class="px-3 py-2 text-sm rounded-lg text-gray-300 cursor-not-allowed font-medium">‹</span>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <%-- Page numbers (show up to 5 around current) --%>
+                    <c:set var="startPage" value="${currentPage - 2 < 1 ? 1 : currentPage - 2}"/>
+                    <c:set var="endPage"   value="${startPage + 4 > totalPages ? totalPages : startPage + 4}"/>
+                    <c:forEach begin="${startPage}" end="${endPage}" var="p">
+                        <c:choose>
+                            <c:when test="${p == currentPage}">
+                                <span class="px-3 py-2 text-sm rounded-lg bg-blue-600 text-white font-bold shadow-sm">${p}</span>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="?page=${p}" class="px-3 py-2 text-sm rounded-lg text-gray-700 hover:bg-gray-200 transition font-medium">${p}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+
+                    <%-- Next / Last --%>
+                    <c:choose>
+                        <c:when test="${currentPage < totalPages}">
+                            <a href="?page=${currentPage + 1}" class="px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-200 transition font-medium">›</a>
+                            <a href="?page=${totalPages}" class="px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-200 transition font-medium" title="Trang cuối">»</a>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="px-3 py-2 text-sm rounded-lg text-gray-300 cursor-not-allowed font-medium">›</span>
+                            <span class="px-3 py-2 text-sm rounded-lg text-gray-300 cursor-not-allowed font-medium">»</span>
+                        </c:otherwise>
+                    </c:choose>
+
+                </div>
+            </div>
+        </c:if>
     </div>
 </div>
 

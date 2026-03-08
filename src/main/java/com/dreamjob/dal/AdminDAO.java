@@ -150,6 +150,35 @@ public class AdminDAO {
         return list;
     }
 
+    // Paged users list
+    public java.util.List<com.dreamjob.model.User> getUsersPaged(int page, int pageSize) {
+        java.util.List<com.dreamjob.model.User> list = new java.util.ArrayList<>();
+        int offset = (page - 1) * pageSize;
+        String sql = "SELECT * FROM Users ORDER BY CreatedAt DESC "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, offset);
+            ps.setInt(2, pageSize);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    com.dreamjob.model.User u = new com.dreamjob.model.User();
+                    u.setUserId(rs.getInt("UserID"));
+                    u.setEmail(rs.getString("Email"));
+                    u.setFullName(rs.getString("FullName"));
+                    u.setRole(rs.getString("Role"));
+                    u.setPhone(rs.getString("Phone"));
+                    u.setCreatedAt(rs.getTimestamp("CreatedAt"));
+                    u.setActive(rs.getBoolean("IsActive"));
+                    list.add(u);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public boolean toggleUserActive(int userId) {
         String sql = "UPDATE Users SET IsActive = CASE WHEN IsActive=1 THEN 0 ELSE 1 END WHERE UserID=?";
         try (Connection con = dbContext.getConnection();

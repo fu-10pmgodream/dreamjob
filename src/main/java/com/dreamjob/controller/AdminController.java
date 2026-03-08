@@ -41,18 +41,33 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String manageUsers(HttpSession session, Model model) {
+    public String manageUsers(@RequestParam(defaultValue = "1") int page,
+            HttpSession session, Model model) {
         if (!isAdmin(session))
             return "redirect:/login";
-        model.addAttribute("users", adminDAO.getAllUsers());
+
+        final int PAGE_SIZE = 10;
+        int totalUsers = adminDAO.countUsers();
+        int totalPages = (int) Math.ceil((double) totalUsers / PAGE_SIZE);
+        if (page < 1)
+            page = 1;
+        if (page > totalPages && totalPages > 0)
+            page = totalPages;
+
+        model.addAttribute("users", adminDAO.getUsersPaged(page, PAGE_SIZE));
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalUsers", totalUsers);
         return "admin/users";
     }
 
     @PostMapping("/users/toggle")
-    public String toggleUser(@RequestParam int userId, HttpSession session) {
+    public String toggleUser(@RequestParam int userId,
+            @RequestParam(defaultValue = "1") int page,
+            HttpSession session) {
         if (!isAdmin(session))
             return "redirect:/login";
         adminDAO.toggleUserActive(userId);
-        return "redirect:/admin/users";
+        return "redirect:/admin/users?page=" + page;
     }
 }
