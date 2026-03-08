@@ -202,4 +202,106 @@ public class AdminDAO {
         }
         return 0;
     }
+
+    // ─── Admin Job Management ───────────────────────────────────────────────
+
+    public int countAllJobs() {
+        return countQuery("SELECT COUNT(*) FROM Jobs");
+    }
+
+    public java.util.List<com.dreamjob.model.Job> getAllJobsPaged(int page, int pageSize) {
+        java.util.List<com.dreamjob.model.Job> list = new java.util.ArrayList<>();
+        int offset = (page - 1) * pageSize;
+        String sql = "SELECT j.*, r.CompanyName, r.LogoPath, l.City, c.CategoryName "
+                + "FROM Jobs j "
+                + "JOIN RecruiterProfiles r ON j.RecruiterID = r.RecruiterID "
+                + "LEFT JOIN Locations l ON j.LocationID = l.LocationID "
+                + "LEFT JOIN JobCategories c ON j.CategoryID = c.CategoryID "
+                + "ORDER BY j.PostedDate DESC "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, offset);
+            ps.setInt(2, pageSize);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    com.dreamjob.model.Job j = new com.dreamjob.model.Job();
+                    j.setJobId(rs.getInt("JobID"));
+                    j.setRecruiterId(rs.getInt("RecruiterID"));
+                    j.setTitle(rs.getString("Title"));
+                    j.setDescription(rs.getString("Description"));
+                    j.setRequirements(rs.getString("Requirements"));
+                    j.setSalaryMin(rs.getBigDecimal("SalaryMin"));
+                    j.setSalaryMax(rs.getBigDecimal("SalaryMax"));
+                    j.setLocationId(rs.getInt("LocationID"));
+                    j.setCategoryId(rs.getInt("CategoryID"));
+                    j.setEmploymentType(rs.getString("EmploymentType"));
+                    j.setPostedDate(rs.getTimestamp("PostedDate"));
+                    j.setExpiredDate(rs.getTimestamp("ExpiredDate"));
+                    j.setStatus(rs.getString("Status"));
+                    j.setCompanyName(rs.getString("CompanyName"));
+                    j.setLogoPath(rs.getString("LogoPath"));
+                    j.setCity(rs.getString("City"));
+                    j.setCategoryName(rs.getString("CategoryName"));
+                    list.add(j);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /** Admin cập nhật status của job (ACTIVE / CLOSED) */
+    public boolean adminSetJobStatus(int jobId, String status) {
+        String sql = "UPDATE Jobs SET Status=? WHERE JobID=?";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, jobId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /** Admin xóa job (không cần kiểm tra recruiter) */
+    public boolean adminDeleteJob(int jobId) {
+        String sql = "DELETE FROM Jobs WHERE JobID=?";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, jobId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /** Admin cập nhật đầy đủ thông tin job */
+    public boolean adminUpdateJob(com.dreamjob.model.Job job) {
+        String sql = "UPDATE Jobs SET Title=?, Description=?, Requirements=?, "
+                + "SalaryMin=?, SalaryMax=?, LocationID=?, CategoryID=?, "
+                + "EmploymentType=?, ExpiredDate=?, Status=? "
+                + "WHERE JobID=?";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, job.getTitle());
+            ps.setString(2, job.getDescription());
+            ps.setString(3, job.getRequirements());
+            ps.setBigDecimal(4, job.getSalaryMin());
+            ps.setBigDecimal(5, job.getSalaryMax());
+            ps.setObject(6, job.getLocationId() > 0 ? job.getLocationId() : null);
+            ps.setObject(7, job.getCategoryId() > 0 ? job.getCategoryId() : null);
+            ps.setString(8, job.getEmploymentType());
+            ps.setTimestamp(9, job.getExpiredDate());
+            ps.setString(10, job.getStatus());
+            ps.setInt(11, job.getJobId());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
