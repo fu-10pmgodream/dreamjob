@@ -14,7 +14,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
                 </svg>
                 <p class="text-xl font-semibold text-gray-500">Bạn chưa lưu việc làm nào.</p>
-                <a href="${pageContext.request.contextPath}/search" class="mt-6 inline-block bg-blue-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-blue-700 transition">Tìm việc ngay</a>
+                <a href="${pageContext.request.contextPath}/search" class="mt-6 inline-block bg-teal-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-teal-700 transition">Tìm việc ngay</a>
             </div>
         </c:when>
         <c:otherwise>
@@ -25,13 +25,13 @@
                             <div class="w-14 h-14 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center p-2">
                                 <img src="${not empty job.logoPath ? job.logoPath : 'https://via.placeholder.com/100'}" alt="logo" class="max-w-full max-h-full object-contain">
                             </div>
-                            <span class="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1 rounded-full uppercase">${job.employmentType}</span>
+                            <span class="bg-teal-50 text-teal-600 text-xs font-bold px-3 py-1 rounded-full uppercase">${job.employmentType}</span>
                         </div>
                         
                         <a href="${pageContext.request.contextPath}/jobs/${job.jobId}">
-                            <h3 class="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition">${job.title}</h3>
+                            <h3 class="text-lg font-bold text-gray-900 mb-1 group-hover:text-teal-600 transition">${job.title}</h3>
                         </a>
-                        <p class="text-blue-600 font-semibold text-sm mb-4">${job.companyName}</p>
+                        <p class="text-teal-600 font-semibold text-sm mb-4">${job.companyName}</p>
                         
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="flex items-center text-gray-500 text-sm bg-gray-50 px-3 py-1 rounded-lg">${job.city}</span>
@@ -41,7 +41,7 @@
                         </div>
                         
                         <div class="flex gap-2 pt-4 border-t border-gray-50">
-                            <a href="${pageContext.request.contextPath}/jobs/${job.jobId}" class="flex-grow text-center bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-xl transition">Xem chi tiết</a>
+                            <a href="${pageContext.request.contextPath}/jobs/${job.jobId}" class="flex-grow text-center bg-teal-600 hover:bg-teal-700 text-white text-sm font-bold py-2 px-4 rounded-xl transition">Xem chi tiết</a>
                             <button onclick="removeSaved(this, ${job.jobId})" class="text-sm text-red-500 hover:text-red-700 border border-red-200 hover:border-red-400 py-2 px-4 rounded-xl transition">Bỏ lưu</button>
                         </div>
                     </div>

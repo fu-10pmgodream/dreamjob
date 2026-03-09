@@ -17,11 +17,11 @@
 <!-- Sidebar -->
 <aside class="w-64 min-h-screen bg-gray-900 text-white flex flex-col fixed top-0 left-0 z-40">
     <div class="p-6 border-b border-gray-700">
-        <a href="${pageContext.request.contextPath}/" class="text-2xl font-extrabold text-blue-400">DreamJob</a>
+        <a href="${pageContext.request.contextPath}/" class="text-2xl font-extrabold text-teal-400">DreamJob</a>
         <p class="text-xs text-gray-400 mt-1">Bảng quản trị hệ thống</p>
     </div>
     <nav class="flex-grow p-4 space-y-2">
-        <a href="${pageContext.request.contextPath}/admin" class="flex items-center px-4 py-3 rounded-xl text-white bg-blue-600 font-semibold">
+        <a href="${pageContext.request.contextPath}/admin" class="flex items-center px-4 py-3 rounded-xl text-white bg-teal-600 font-semibold">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
             Tổng quan
         </a>
@@ -46,8 +46,8 @@
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
-        <div class="bg-blue-600 text-white p-6 rounded-2xl shadow-lg">
-            <p class="text-blue-100 text-sm font-medium">Tổng người dùng</p>
+        <div class="bg-teal-600 text-white p-6 rounded-2xl shadow-lg">
+            <p class="text-teal-100 text-sm font-medium">Tổng người dùng</p>
             <p class="text-4xl font-extrabold mt-2">${totalUsers}</p>
         </div>
         <div class="bg-green-600 text-white p-6 rounded-2xl shadow-lg">
@@ -68,7 +68,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center">
             <p class="text-gray-500 text-sm mb-2">Lương trung bình</p>
-            <p class="text-2xl font-extrabold text-blue-600"><fmt:formatNumber value="${avgSalary/1000000}" pattern="#,##0.#"/> triệu</p>
+            <p class="text-2xl font-extrabold text-teal-600"><fmt:formatNumber value="${avgSalary/1000000}" pattern="#,##0.#"/> triệu</p>
         </div>
         <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center">
             <p class="text-gray-500 text-sm mb-2">Lương cao nhất</p>
@@ -102,12 +102,12 @@
 </div>
 
 <script>
-    const blue = ['#3B82F6','#6366F1','#8B5CF6','#EC4899','#F59E0B','#10B981','#EF4444','#14B8A6'];
+    const teal = ['#3B82F6','#6366F1','#8B5CF6','#EC4899','#F59E0B','#10B981','#EF4444','#14B8A6'];
 
     function makeChart(id, type, labels, data, colors) {
         new Chart(document.getElementById(id), {
             type: type,
-            data: { labels: labels, datasets: [{ data: data, backgroundColor: colors || blue, borderWidth: 0 }] },
+            data: { labels: labels, datasets: [{ data: data, backgroundColor: colors || teal, borderWidth: 0 }] },
             options: { plugins: { legend: { position: 'bottom' } }, responsive: true }
         });
     }

@@ -12,7 +12,7 @@
             <div class="text-center py-24">
                 <svg class="w-24 h-24 mx-auto text-gray-200 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                 <p class="text-xl font-semibold text-gray-500">Bạn chưa ứng tuyển công việc nào.</p>
-                <a href="${pageContext.request.contextPath}/search" class="mt-6 inline-block bg-blue-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-blue-700 transition">Khám phá việc làm</a>
+                <a href="${pageContext.request.contextPath}/search" class="mt-6 inline-block bg-teal-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-teal-700 transition">Khám phá việc làm</a>
             </div>
         </c:when>
         <c:otherwise>
@@ -25,7 +25,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-gray-900">${app.jobTitle}</h3>
-                                <p class="text-sm text-blue-600">${app.companyName}</p>
+                                <p class="text-sm text-teal-600">${app.companyName}</p>
                             </div>
                         </div>
                         <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-50">
@@ -41,7 +41,7 @@
                             </span>
                         </div>
                         <c:if test="${not empty app.cvPath}">
-                            <a href="${app.cvPath}" target="_blank" class="text-xs text-blue-500 hover:underline mt-3 block">Xem CV đã nộp ↗</a>
+                            <a href="${app.cvPath}" target="_blank" class="text-xs text-teal-500 hover:underline mt-3 block">Xem CV đã nộp ↗</a>
                         </c:if>
                     </div>
                 </c:forEach>
