@@ -10,7 +10,7 @@
             <h1 class="text-3xl font-extrabold text-gray-900">Quản lý tin tuyển dụng</h1>
             <p class="text-gray-500">Bạn đang có ${myJobs.size()} tin tuyển dụng</p>
         </div>
-        <a href="${pageContext.request.contextPath}/jobs/create" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg flex items-center">
+        <a href="${pageContext.request.contextPath}/jobs/create" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg flex items-center">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             Đăng tin mới
         </a>
@@ -20,7 +20,7 @@
         <div class="mb-6 bg-green-50 border-l-4 border-green-500 p-4 text-green-700">Đã đăng tin tuyển dụng thành công!</div>
     </c:if>
     <c:if test="${param.success == 'updated'}">
-        <div class="mb-6 bg-blue-50 border-l-4 border-blue-500 p-4 text-blue-700">Đã cập nhật thông tin thành công!</div>
+        <div class="mb-6 bg-teal-50 border-l-4 border-teal-500 p-4 text-teal-700">Đã cập nhật thông tin thành công!</div>
     </c:if>
     <c:if test="${param.success == 'deleted'}">
         <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 text-red-700">Đã xóa tin tuyển dụng.</div>
@@ -70,7 +70,7 @@
                             </c:choose>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
-                            <a href="${pageContext.request.contextPath}/jobs/edit/${job.jobId}" class="text-blue-600 hover:text-blue-900">Sửa</a>
+                            <a href="${pageContext.request.contextPath}/jobs/edit/${job.jobId}" class="text-teal-600 hover:text-teal-900">Sửa</a>
                             <c:if test="${job.status == 'ACTIVE'}">
                                 <form action="${pageContext.request.contextPath}/jobs/close" method="POST" class="inline" onsubmit="return confirm('Bạn có chắc chắn muốn đóng tin tuyển dụng này? Ứng viên sẽ không thể nộp đơn nữa.')">
                                     <input type="hidden" name="id" value="${job.jobId}">

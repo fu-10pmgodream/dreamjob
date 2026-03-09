@@ -15,7 +15,7 @@
 
 <aside class="w-64 min-h-screen bg-gray-900 text-white flex flex-col fixed top-0 left-0 z-40">
     <div class="p-6 border-b border-gray-700">
-        <a href="${pageContext.request.contextPath}/" class="text-2xl font-extrabold text-blue-400">DreamJob</a>
+        <a href="${pageContext.request.contextPath}/" class="text-2xl font-extrabold text-teal-400">DreamJob</a>
         <p class="text-xs text-gray-400 mt-1">Bảng quản trị hệ thống</p>
     </div>
     <nav class="flex-grow p-4 space-y-2">
@@ -23,7 +23,7 @@
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
             Tổng quan
         </a>
-        <a href="${pageContext.request.contextPath}/admin/users" class="flex items-center px-4 py-3 rounded-xl text-white bg-blue-600 font-semibold">
+        <a href="${pageContext.request.contextPath}/admin/users" class="flex items-center px-4 py-3 rounded-xl text-white bg-teal-600 font-semibold">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             Quản lý người dùng
         </a>
@@ -44,7 +44,7 @@
     <div class="flex items-center justify-between mb-8">
         <div>
             <h1 class="text-3xl font-extrabold text-gray-900">Quản lý người dùng</h1>
-            <p class="text-sm text-gray-500 mt-1">Tổng cộng <span class="font-bold text-blue-600">${totalUsers}</span> người dùng</p>
+            <p class="text-sm text-gray-500 mt-1">Tổng cộng <span class="font-bold text-teal-600">${totalUsers}</span> người dùng</p>
         </div>
     </div>
 
@@ -71,7 +71,7 @@
                         <td class="px-6 py-4">
                             <span class="px-2 py-1 text-xs font-bold rounded-full
                                 ${u.role == 'ADMIN'     ? 'bg-red-100 text-red-700' :
-                                  u.role == 'RECRUITER' ? 'bg-blue-100 text-blue-700' :
+                                  u.role == 'RECRUITER' ? 'bg-teal-100 text-teal-700' :
                                   'bg-green-100 text-green-700'}">
                                 ${u.role}
                             </span>
@@ -130,7 +130,7 @@
                     <c:forEach begin="${startPage}" end="${endPage}" var="p">
                         <c:choose>
                             <c:when test="${p == currentPage}">
-                                <span class="px-3 py-2 text-sm rounded-lg bg-blue-600 text-white font-bold shadow-sm">${p}</span>
+                                <span class="px-3 py-2 text-sm rounded-lg bg-teal-600 text-white font-bold shadow-sm">${p}</span>
                             </c:when>
                             <c:otherwise>
                                 <a href="?page=${p}" class="px-3 py-2 text-sm rounded-lg text-gray-700 hover:bg-gray-200 transition font-medium">${p}</a>

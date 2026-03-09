@@ -40,7 +40,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <c:if test="${not empty app.cvPath}">
-                                        <a href="${app.cvPath}" target="_blank" class="text-blue-600 hover:underline text-sm">Xem CV ↗</a>
+                                        <a href="${app.cvPath}" target="_blank" class="text-teal-600 hover:underline text-sm">Xem CV ↗</a>
                                     </c:if>
                                 </td>
                                 <td class="px-6 py-4">

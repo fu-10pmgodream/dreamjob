@@ -16,7 +16,7 @@
 <%-- Sidebar --%>
 <aside class="w-64 min-h-screen bg-gray-900 text-white flex flex-col fixed top-0 left-0 z-40">
     <div class="p-6 border-b border-gray-700">
-        <a href="${pageContext.request.contextPath}/" class="text-2xl font-extrabold text-blue-400">DreamJob</a>
+        <a href="${pageContext.request.contextPath}/" class="text-2xl font-extrabold text-teal-400">DreamJob</a>
         <p class="text-xs text-gray-400 mt-1">Bảng quản trị hệ thống</p>
     </div>
     <nav class="flex-grow p-4 space-y-2">
@@ -31,7 +31,7 @@
             Quản lý người dùng
         </a>
         <a href="${pageContext.request.contextPath}/admin/jobs"
-           class="flex items-center px-4 py-3 rounded-xl text-white bg-blue-600 font-semibold">
+           class="flex items-center px-4 py-3 rounded-xl text-white bg-teal-600 font-semibold">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             Quản lý việc làm
         </a>
@@ -50,7 +50,7 @@
     <div class="flex items-center justify-between mb-8">
         <div>
             <h1 class="text-3xl font-extrabold text-gray-900">Quản lý việc làm</h1>
-            <p class="text-sm text-gray-500 mt-1">Tổng cộng <span class="font-bold text-blue-600">${totalJobs}</span> việc làm</p>
+            <p class="text-sm text-gray-500 mt-1">Tổng cộng <span class="font-bold text-teal-600">${totalJobs}</span> việc làm</p>
         </div>
     </div>
 
@@ -86,7 +86,7 @@
                         <td class="px-4 py-3 text-sm text-gray-400">#${j.jobId}</td>
                         <td class="px-4 py-3">
                             <a href="${pageContext.request.contextPath}/jobs/${j.jobId}"
-                               class="font-semibold text-gray-900 hover:text-blue-600 transition text-sm"
+                               class="font-semibold text-gray-900 hover:text-teal-600 transition text-sm"
                                target="_blank">${j.title}</a>
                         </td>
                         <td class="px-4 py-3 text-sm text-gray-600">${j.companyName}</td>
@@ -112,7 +112,7 @@
                             <div class="flex items-center justify-end gap-2">
                                 <%-- Edit --%>
                                 <a href="${pageContext.request.contextPath}/admin/jobs/edit/${j.jobId}?page=${currentPage}"
-                                   class="text-xs font-bold px-3 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition">
+                                   class="text-xs font-bold px-3 py-2 rounded-lg bg-teal-50 text-teal-600 hover:bg-teal-100 transition">
                                     Sửa
                                 </a>
                                 <%-- Toggle status --%>
@@ -171,7 +171,7 @@
                     <c:forEach begin="${startPage}" end="${endPage}" var="p">
                         <c:choose>
                             <c:when test="${p == currentPage}">
-                                <span class="px-3 py-2 text-sm rounded-lg bg-blue-600 text-white font-bold shadow-sm">${p}</span>
+                                <span class="px-3 py-2 text-sm rounded-lg bg-teal-600 text-white font-bold shadow-sm">${p}</span>
                             </c:when>
                             <c:otherwise>
                                 <a href="?page=${p}" class="px-3 py-2 text-sm rounded-lg text-gray-700 hover:bg-gray-200 transition font-medium">${p}</a>

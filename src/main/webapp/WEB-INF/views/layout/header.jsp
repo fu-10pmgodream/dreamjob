@@ -20,7 +20,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
             <div class="flex items-center">
-                <a href="${pageContext.request.contextPath}/" class="text-2xl font-bold text-blue-600 flex items-center">
+                <a href="${pageContext.request.contextPath}/" class="text-2xl font-bold text-teal-600 flex items-center">
                     <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                     </svg>
@@ -29,15 +29,15 @@
             </div>
             
             <div class="hidden md:flex items-center space-x-8">
-                <a href="${pageContext.request.contextPath}/" class="text-gray-600 hover:text-blue-600 font-medium transition">Trang chủ</a>
-                <a href="${pageContext.request.contextPath}/search" class="text-gray-600 hover:text-blue-600 font-medium transition">Tìm việc làm</a>
+                <a href="${pageContext.request.contextPath}/" class="text-gray-600 hover:text-teal-600 font-medium transition">Trang chủ</a>
+                <a href="${pageContext.request.contextPath}/search" class="text-gray-600 hover:text-teal-600 font-medium transition">Tìm việc làm</a>
                 <c:if test="${user.role == 'RECRUITER'}">
-                    <a href="${pageContext.request.contextPath}/jobs/manage" class="text-gray-600 font-semibold hover:text-blue-700 transition">Tin tuyển dụng</a>
-                    <a href="${pageContext.request.contextPath}/applications/manage" class="text-gray-600 hover:text-blue-600 font-medium transition">Đơn ứng tuyển</a>
+                    <a href="${pageContext.request.contextPath}/jobs/manage" class="text-gray-600 font-semibold hover:text-teal-700 transition">Tin tuyển dụng</a>
+                    <a href="${pageContext.request.contextPath}/applications/manage" class="text-gray-600 hover:text-teal-600 font-medium transition">Đơn ứng tuyển</a>
                 </c:if>
                 <c:if test="${user.role == 'JOBSEEKER'}">
-                    <a href="${pageContext.request.contextPath}/saved-jobs" class="text-gray-600 hover:text-blue-600 font-medium transition">Việc đã lưu</a>
-                    <a href="${pageContext.request.contextPath}/applications/my" class="text-gray-600 hover:text-blue-600 font-medium transition">Đơn của tôi</a>
+                    <a href="${pageContext.request.contextPath}/saved-jobs" class="text-gray-600 hover:text-teal-600 font-medium transition">Việc đã lưu</a>
+                    <a href="${pageContext.request.contextPath}/applications/my" class="text-gray-600 hover:text-teal-600 font-medium transition">Đơn của tôi</a>
                 </c:if>
                 <c:if test="${user.role == 'ADMIN'}">
                     <a href="${pageContext.request.contextPath}/admin" class="text-red-500 font-semibold hover:text-red-700 transition">Quản trị</a>
@@ -48,9 +48,9 @@
                 <c:choose>
                     <c:when test="${not empty user}">
                         <div class="relative group">
-                            <div class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 focus:outline-none">
+                            <div class="flex items-center space-x-2 text-gray-700 hover:text-teal-600 focus:outline-none">
                                 <span class="font-medium hidden sm:block">${user.fullName}</span>
-                                <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                                <div class="w-9 h-9 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold text-sm">
                                     ${user.fullName.substring(0, 1)}
                                 </div>
                             </div>
@@ -77,8 +77,8 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/login" class="text-gray-600 hover:text-blue-600 font-medium">Đăng nhập</a>
-                        <a href="${pageContext.request.contextPath}/register" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition shadow-sm">Đăng ký</a>
+                        <a href="${pageContext.request.contextPath}/login" class="text-gray-600 hover:text-teal-600 font-medium">Đăng nhập</a>
+                        <a href="${pageContext.request.contextPath}/register" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow-sm">Đăng ký</a>
                     </c:otherwise>
                 </c:choose>
             </div>

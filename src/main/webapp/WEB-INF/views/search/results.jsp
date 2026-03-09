@@ -5,7 +5,7 @@
 <c:import url="../layout/header.jsp" />
 
 <main class="flex-grow">
-    <div class="bg-gradient-to-r from-blue-700 to-indigo-700 py-14">
+    <div class="bg-gradient-to-br from-teal-600 to-teal-800 py-14">
         <div class="max-w-7xl mx-auto px-4">
             <h1 class="text-4xl font-extrabold text-white mb-6 text-center">Tìm kiếm việc làm</h1>
             
@@ -17,7 +17,7 @@
                         <option value="${loc.locationId}" ${selectedLocation == loc.locationId.toString() ? 'selected' : ''}>${loc.city}</option>
                     </c:forEach>
                 </select>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-xl transition">Tìm kiếm</button>
+                <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-8 py-3 rounded-xl transition">Tìm kiếm</button>
             </form>
         </div>
     </div>
@@ -33,12 +33,12 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-3">Danh mục</label>
                         <div class="space-y-2 max-h-48 overflow-y-auto">
-                            <label class="flex items-center gap-2 cursor-pointer select-none py-1 px-2 rounded-lg hover:bg-blue-50 transition">
-                                <input type="radio" name="categoryId" value="" ${empty selectedCategory ? 'checked' : ''} class="text-blue-600"> <span class="text-sm">Tất cả</span>
+                            <label class="flex items-center gap-2 cursor-pointer select-none py-1 px-2 rounded-lg hover:bg-teal-50 transition">
+                                <input type="radio" name="categoryId" value="" ${empty selectedCategory ? 'checked' : ''} class="text-teal-600"> <span class="text-sm">Tất cả</span>
                             </label>
                             <c:forEach items="${categories}" var="cat">
-                                <label class="flex items-center gap-2 cursor-pointer select-none py-1 px-2 rounded-lg hover:bg-blue-50 transition">
-                                    <input type="radio" name="categoryId" value="${cat.categoryId}" ${selectedCategory == cat.categoryId.toString() ? 'checked' : ''} class="text-blue-600"> <span class="text-sm">${cat.categoryName}</span>
+                                <label class="flex items-center gap-2 cursor-pointer select-none py-1 px-2 rounded-lg hover:bg-teal-50 transition">
+                                    <input type="radio" name="categoryId" value="${cat.categoryId}" ${selectedCategory == cat.categoryId.toString() ? 'checked' : ''} class="text-teal-600"> <span class="text-sm">${cat.categoryName}</span>
                                 </label>
                             </c:forEach>
                         </div>
@@ -49,8 +49,8 @@
                         <div class="space-y-2">
                             <c:set var="types" value="${{'FULL_TIME','PART_TIME','CONTRACT','INTERNSHIP','REMOTE'}}"/>
                             <c:forEach items="${types}" var="t">
-                                <label class="flex items-center gap-2 cursor-pointer select-none py-1 px-2 rounded-lg hover:bg-blue-50 transition">
-                                    <input type="checkbox" name="employmentType" value="${t}" ${selectedType == t ? 'checked' : ''} class="text-blue-600">
+                                <label class="flex items-center gap-2 cursor-pointer select-none py-1 px-2 rounded-lg hover:bg-teal-50 transition">
+                                    <input type="checkbox" name="employmentType" value="${t}" ${selectedType == t ? 'checked' : ''} class="text-teal-600">
                                     <span class="text-sm">${t == 'FULL_TIME' ? 'Toàn thời gian' : t == 'PART_TIME' ? 'Bán thời gian' : t == 'CONTRACT' ? 'Hợp đồng' : t == 'INTERNSHIP' ? 'Thực tập' : 'Remote'}</span>
                                 </label>
                             </c:forEach>
@@ -62,17 +62,17 @@
                         <div class="space-y-3">
                             <input type="number" name="salaryMin" id="salaryMin" value="${salaryMin}"
                                    min="0" placeholder="Từ (VD: 10000000)"
-                                   class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                   class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none">
                             <input type="number" name="salaryMax" id="salaryMax" value="${salaryMax}"
                                    min="0" placeholder="Đến (VD: 50000000)"
-                                   class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                   class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none">
                             <div id="salaryErr" class="text-xs text-red-500 hidden"></div>
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Sắp xếp theo</label>
-                        <select name="sortBy" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500">
+                        <select name="sortBy" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:ring-2 focus:ring-teal-500">
                             <option value="newest"      ${sortBy == 'newest'      ? 'selected' : ''}>Mới nhất</option>
                             <option value="salary_desc" ${sortBy == 'salary_desc' ? 'selected' : ''}>Lương cao nhất</option>
                             <option value="salary_asc"  ${sortBy == 'salary_asc'  ? 'selected' : ''}>Lương thấp nhất</option>
@@ -81,15 +81,15 @@
                     </div>
 
                     <button type="submit" onclick="return validateSalary()"
-                            class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition">Áp dụng bộ lọc</button>
-                    <a href="${pageContext.request.contextPath}/search" class="block text-center text-sm text-gray-500 hover:text-blue-600 transition">Xóa bộ lọc</a>
+                            class="w-full bg-teal-600 text-white font-bold py-3 rounded-xl hover:bg-teal-700 transition">Áp dụng bộ lọc</button>
+                    <a href="${pageContext.request.contextPath}/search" class="block text-center text-sm text-gray-500 hover:text-teal-600 transition">Xóa bộ lọc</a>
                 </form>
             </aside>
 
             <!-- Results -->
             <div class="flex-grow">
                 <div class="flex justify-between items-center mb-6">
-                    <p class="text-gray-600">Tìm thấy <strong class="text-blue-600">${totalJobs}</strong> việc làm phù hợp</p>
+                    <p class="text-gray-600">Tìm thấy <strong class="text-teal-600">${totalJobs}</strong> việc làm phù hợp</p>
                 </div>
 
                 <c:choose>
@@ -110,10 +110,10 @@
                                         <div class="flex-grow">
                                             <div class="flex justify-between items-start">
                                                 <div>
-                                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition">
+                                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-teal-600 transition">
                                                         <a href="${pageContext.request.contextPath}/jobs/${job.jobId}">${job.title}</a>
                                                     </h3>
-                                                    <p class="text-blue-600 font-semibold text-sm">${job.companyName}</p>
+                                                    <p class="text-teal-600 font-semibold text-sm">${job.companyName}</p>
                                                 </div>
                                                 <div class="text-right">
                                                     <p class="text-green-600 font-bold">
@@ -131,7 +131,7 @@
                                             </div>
                                             <div class="flex flex-wrap gap-2 mt-3">
                                                 <span class="bg-gray-50 text-gray-600 text-xs px-3 py-1 rounded-lg">${job.city}</span>
-                                                <span class="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1 rounded-lg uppercase">${job.employmentType}</span>
+                                                <span class="bg-teal-50 text-teal-600 text-xs font-bold px-3 py-1 rounded-lg uppercase">${job.employmentType}</span>
                                                 <span class="bg-purple-50 text-purple-600 text-xs px-3 py-1 rounded-lg">${job.categoryName}</span>
                                             </div>
                                         </div>
@@ -145,7 +145,7 @@
                             <div class="flex justify-center mt-10 space-x-2">
                                 <c:forEach begin="1" end="${totalPages}" var="p">
                                     <a href="?keyword=${keyword}&categoryId=${selectedCategory}&locationId=${selectedLocation}&salaryMin=${salaryMin}&salaryMax=${salaryMax}&employmentType=${selectedType}&sortBy=${sortBy}&page=${p}"
-                                       class="w-10 h-10 flex items-center justify-center rounded-xl ${p == currentPage ? 'bg-blue-600 text-white font-bold' : 'bg-white text-gray-600 border border-gray-200 hover:border-blue-400 hover:text-blue-600'} transition text-sm">
+                                       class="w-10 h-10 flex items-center justify-center rounded-xl ${p == currentPage ? 'bg-teal-600 text-white font-bold' : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-400 hover:text-teal-600'} transition text-sm">
                                         ${p}
                                     </a>
                                 </c:forEach>

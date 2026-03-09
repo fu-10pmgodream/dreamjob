@@ -16,7 +16,7 @@
 <%-- Sidebar --%>
 <aside class="w-64 min-h-screen bg-gray-900 text-white flex flex-col fixed top-0 left-0 z-40">
     <div class="p-6 border-b border-gray-700">
-        <a href="${pageContext.request.contextPath}/" class="text-2xl font-extrabold text-blue-400">DreamJob</a>
+        <a href="${pageContext.request.contextPath}/" class="text-2xl font-extrabold text-teal-400">DreamJob</a>
         <p class="text-xs text-gray-400 mt-1">Bảng quản trị hệ thống</p>
     </div>
     <nav class="flex-grow p-4 space-y-2">
@@ -31,7 +31,7 @@
             Quản lý người dùng
         </a>
         <a href="${pageContext.request.contextPath}/admin/jobs"
-           class="flex items-center px-4 py-3 rounded-xl text-white bg-blue-600 font-semibold">
+           class="flex items-center px-4 py-3 rounded-xl text-white bg-teal-600 font-semibold">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             Quản lý việc làm
         </a>
@@ -47,13 +47,13 @@
 <div class="ml-64 flex-grow p-8 max-w-4xl">
     <%-- Breadcrumb --%>
     <div class="flex items-center gap-2 text-sm text-gray-500 mb-6">
-        <a href="${pageContext.request.contextPath}/admin/jobs" class="hover:text-blue-600 transition">Quản lý việc làm</a>
+        <a href="${pageContext.request.contextPath}/admin/jobs" class="hover:text-teal-600 transition">Quản lý việc làm</a>
         <span>›</span>
         <span class="text-gray-800 font-semibold">Sửa: ${job.title}</span>
     </div>
 
     <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-        <h1 class="text-2xl font-extrabold text-gray-900 mb-6">Chỉnh sửa việc làm <span class="text-blue-500">#${job.jobId}</span></h1>
+        <h1 class="text-2xl font-extrabold text-gray-900 mb-6">Chỉnh sửa việc làm <span class="text-teal-500">#${job.jobId}</span></h1>
 
         <c:if test="${not empty error}">
             <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 text-red-700 rounded-xl">${error}</div>
@@ -67,11 +67,11 @@
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2">Tiêu đề công việc *</label>
                 <input type="text" name="title" required value="${job.title}"
-                       class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                       class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none">
             </div>
 
             <%-- Company info (read-only) --%>
-            <div class="bg-blue-50 rounded-xl p-4 text-sm text-blue-800">
+            <div class="bg-teal-50 rounded-xl p-4 text-sm text-teal-800">
                 <span class="font-semibold">Công ty:</span> ${job.companyName}
                 &nbsp;|&nbsp; <span class="font-semibold">Recruiter ID:</span> ${job.recruiterId}
             </div>
@@ -80,14 +80,14 @@
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2">Mô tả công việc</label>
                 <textarea name="description" rows="5"
-                          class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">${job.description}</textarea>
+                          class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none">${job.description}</textarea>
             </div>
 
             <%-- Requirements --%>
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2">Yêu cầu</label>
                 <textarea name="requirements" rows="4"
-                          class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">${job.requirements}</textarea>
+                          class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none">${job.requirements}</textarea>
             </div>
 
             <%-- Salary row --%>
@@ -95,13 +95,13 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Lương tối thiểu (VNĐ)</label>
                     <input type="number" name="salaryMin" min="0" value="${job.salaryMin}"
-                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
                            placeholder="Ví dụ: 8000000">
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Lương tối đa (VNĐ)</label>
                     <input type="number" name="salaryMax" min="0" value="${job.salaryMax}"
-                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
                            placeholder="Ví dụ: 15000000">
                 </div>
             </div>
@@ -110,7 +110,7 @@
             <div class="grid grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Danh mục</label>
-                    <select name="categoryId" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-white">
+                    <select name="categoryId" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 bg-white">
                         <option value="">-- Chọn danh mục --</option>
                         <c:forEach var="cat" items="${categories}">
                             <option value="${cat.categoryId}" ${job.categoryId == cat.categoryId ? 'selected' : ''}>${cat.categoryName}</option>
@@ -119,7 +119,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Địa điểm</label>
-                    <select name="locationId" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-white">
+                    <select name="locationId" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 bg-white">
                         <option value="">-- Chọn địa điểm --</option>
                         <c:forEach var="loc" items="${locations}">
                             <option value="${loc.locationId}" ${job.locationId == loc.locationId ? 'selected' : ''}>${loc.city}, ${loc.country}</option>
@@ -132,7 +132,7 @@
             <div class="grid grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Loại hình</label>
-                    <select name="employmentType" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-white">
+                    <select name="employmentType" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 bg-white">
                         <option value="">-- Chọn loại --</option>
                         <option value="Full-time"   ${job.employmentType == 'Full-time'   ? 'selected' : ''}>Full-time</option>
                         <option value="Part-time"   ${job.employmentType == 'Part-time'   ? 'selected' : ''}>Part-time</option>
@@ -143,7 +143,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Trạng thái</label>
-                    <select name="status" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-white">
+                    <select name="status" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 bg-white">
                         <option value="ACTIVE" ${job.status == 'ACTIVE' ? 'selected' : ''}>ACTIVE</option>
                         <option value="CLOSED" ${job.status == 'CLOSED' ? 'selected' : ''}>CLOSED</option>
                     </select>
@@ -155,7 +155,7 @@
                 <label class="block text-sm font-bold text-gray-700 mb-2">Ngày hết hạn</label>
                 <input type="date" name="expiredDateStr"
                        value="<fmt:formatDate value='${job.expiredDate}' pattern='yyyy-MM-dd'/>"
-                       class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                       class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none">
             </div>
 
             <%-- Buttons --%>
@@ -163,7 +163,7 @@
                 <a href="${pageContext.request.contextPath}/admin/jobs?page=${param.page != null ? param.page : 1}"
                    class="px-6 py-3 text-gray-600 font-bold hover:text-gray-900 transition">Hủy</a>
                 <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded-xl transition shadow-lg">
+                        class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-10 rounded-xl transition shadow-lg">
                     Lưu thay đổi
                 </button>
             </div>

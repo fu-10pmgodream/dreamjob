@@ -38,7 +38,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                             </svg>
                         </span>
-                        <input type="email" name="email" value="${param.email}" required class="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition sm:text-sm" placeholder="example@email.com">
+                        <input type="email" name="email" value="${param.email}" required class="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition sm:text-sm" placeholder="example@email.com">
                     </div>
                 </div>
 
@@ -50,19 +50,19 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                             </svg>
                         </span>
-                        <input type="password" name="password" required class="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition sm:text-sm" placeholder="••••••••">
+                        <input type="password" name="password" required class="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition sm:text-sm" placeholder="••••••••">
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <input type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <input type="checkbox" class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
                         <label class="ml-2 block text-sm text-gray-700">Ghi nhớ</label>
                     </div>
-                    <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-500">Quên mật khẩu?</a>
+                    <a href="#" class="text-sm font-medium text-teal-600 hover:text-teal-500">Quên mật khẩu?</a>
                 </div>
 
-                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-md text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
+                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-md text-sm font-bold text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition">
                     Đăng nhập
                 </button>
             </form>
@@ -70,7 +70,7 @@
             <div class="mt-8 text-center">
                 <p class="text-sm text-gray-600">
                     Chưa có tài khoản? 
-                    <a href="${pageContext.request.contextPath}/register" class="font-bold text-blue-600 hover:text-blue-500">Đăng ký ngay</a>
+                    <a href="${pageContext.request.contextPath}/register" class="font-bold text-teal-600 hover:text-teal-500">Đăng ký ngay</a>
                 </p>
             </div>
         </div>
