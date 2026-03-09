@@ -123,6 +123,49 @@ public class UserDAO {
         return null;
     }
 
+    /**
+     * Xác minh mật khẩu hiện tại của user có khớp không.
+     *
+     * @param userId   ID của user
+     * @param password mật khẩu plain-text cần kiểm tra
+     * @return true nếu khớp
+     */
+    public boolean verifyPassword(int userId, String password) {
+        String sql = "SELECT PasswordHash FROM Users WHERE UserID = ?";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return passwordEncoder.matches(password, rs.getString("PasswordHash"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Cập nhật mật khẩu mới cho user theo userId.
+     *
+     * @param userId      ID của user
+     * @param newPassword mật khẩu mới (plain-text, sẽ được BCrypt encode)
+     * @return true nếu update thành công
+     */
+    public boolean updatePassword(int userId, String newPassword) {
+        String sql = "UPDATE Users SET PasswordHash = ? WHERE UserID = ?";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, passwordEncoder.encode(newPassword));
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private User mapUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt("UserID"));

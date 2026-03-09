@@ -209,6 +209,60 @@ public class ProfileController {
         return "profile/seeker";
     }
 
+    // ─── POST /profile/change-password ─────────────────────────────────────
+    @PostMapping("/change-password")
+    public String changePassword(
+            @RequestParam String currentPassword,
+            @RequestParam String newPassword,
+            @RequestParam String confirmPassword,
+            HttpSession session,
+            Model model) {
+
+        User user = (User) session.getAttribute("user");
+        if (user == null)
+            return "redirect:/login";
+
+        // ── Validation ──────────────────────────────────────────────────────
+
+        // Mật khẩu cũ không được rỗng
+        if (currentPassword == null || currentPassword.isBlank()) {
+            return redirectWithPwdError(session, "Vui lòng nhập mật khẩu hiện tại!");
+        }
+
+        // Kiểm tra mật khẩu cũ có đúng không
+        if (!userDAO.verifyPassword(user.getUserId(), currentPassword)) {
+            return redirectWithPwdError(session, "Mật khẩu hiện tại không chính xác!");
+        }
+
+        // Mật khẩu mới tối thiểu 6 ký tự
+        if (newPassword == null || newPassword.length() < 6) {
+            return redirectWithPwdError(session, "Mật khẩu mới phải có ít nhất 6 ký tự!");
+        }
+
+        // Không được trùng với mật khẩu cũ
+        if (currentPassword.equals(newPassword)) {
+            return redirectWithPwdError(session, "Mật khẩu mới không được trùng với mật khẩu hiện tại!");
+        }
+
+        // Xác nhận mật khẩu phải khớp
+        if (!newPassword.equals(confirmPassword)) {
+            return redirectWithPwdError(session, "Mật khẩu xác nhận không khớp!");
+        }
+
+        // ── Cập nhật ────────────────────────────────────────────────────────
+        if (userDAO.updatePassword(user.getUserId(), newPassword)) {
+            return "redirect:/profile?pwdSuccess=true";
+        }
+
+        return redirectWithPwdError(session, "Đã có lỗi xảy ra. Vui lòng thử lại!");
+    }
+
+    /** Lưu lỗi đổi mật khẩu vào session rồi redirect về trang profile */
+    private String redirectWithPwdError(HttpSession session, String message) {
+        session.setAttribute("pwdError", message);
+        return "redirect:/profile#change-password";
+    }
+
     // ─── Utility ───────────────────────────────────────────────────────────
     private static String[] appendError(String[] arr, String msg) {
         String[] newArr = new String[arr.length + 1];

@@ -99,6 +99,111 @@
             </div>
         </form>
     </div>
+
+    <%-- ═══════════════════════════════════════════════ --%>
+    <%-- CARD ĐỔI MẬT KHẨU                              --%>
+    <%-- ═══════════════════════════════════════════════ --%>
+    <div id="change-password" class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mt-6">
+        <div class="p-8">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">Đổi mật khẩu</h3>
+                    <p class="text-sm text-gray-500">Cập nhật mật khẩu để bảo vệ tài khoản</p>
+                </div>
+            </div>
+
+            <%-- Thông báo lỗi từ session --%>
+            <c:if test="${not empty pwdError}">
+                <div class="mb-5 bg-red-50 border-l-4 border-red-500 p-4 text-red-700 text-sm flex items-start gap-3 rounded-lg">
+                    <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>${pwdError}</span>
+                </div>
+                <c:remove var="pwdError" scope="session"/>
+            </c:if>
+
+            <%-- Thông báo thành công --%>
+            <c:if test="${param.pwdSuccess == 'true'}">
+                <div class="mb-5 bg-green-50 border-l-4 border-green-500 p-4 text-green-700 text-sm flex items-start gap-3 rounded-lg">
+                    <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Đổi mật khẩu thành công!</span>
+                </div>
+            </c:if>
+
+            <form id="changePwdForm" action="${pageContext.request.contextPath}/profile/change-password"
+                  method="POST" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+                <%-- Mật khẩu hiện tại --%>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Mật khẩu hiện tại *</label>
+                    <div class="relative">
+                        <input type="password" name="currentPassword" id="cp_current" required
+                               class="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                               placeholder="Nhập mật khẩu hiện tại">
+                        <button type="button" onclick="togglePwd('cp_current','cp_eye1')"
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                            <svg id="cp_eye1" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <%-- Mật khẩu mới --%>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Mật khẩu mới *</label>
+                    <div class="relative">
+                        <input type="password" name="newPassword" id="cp_new" required minlength="6"
+                               class="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                               placeholder="Tối thiểu 6 ký tự">
+                        <button type="button" onclick="togglePwd('cp_new','cp_eye2')"
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                            <svg id="cp_eye2" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <%-- Xác nhận mật khẩu --%>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Xác nhận mật khẩu mới *</label>
+                    <div class="relative">
+                        <input type="password" name="confirmPassword" id="cp_confirm" required minlength="6"
+                               class="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                               placeholder="Nhập lại mật khẩu mới">
+                        <button type="button" onclick="togglePwd('cp_confirm','cp_eye3')"
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                            <svg id="cp_eye3" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <p id="cp_matchMsg" class="text-xs mt-1 hidden"></p>
+                </div>
+
+                <%-- Nút submit --%>
+                <div class="md:col-span-3 flex justify-end pt-2 border-t border-gray-100">
+                    <button type="submit"
+                            class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl transition shadow-md">
+                        Đổi mật khẩu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
 
 <script>
@@ -129,6 +234,39 @@
                 newEl.focus();
                 return;
             }
+        }
+    });
+})();
+
+// ─── Đổi mật khẩu: show/hide & match check ───────────────────────────
+function togglePwd(inputId, iconId) {
+    var input = document.getElementById(inputId);
+    input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+(function () {
+    var np = document.getElementById('cp_new');
+    var cp = document.getElementById('cp_confirm');
+    var msg = document.getElementById('cp_matchMsg');
+
+    function check() {
+        if (!cp.value) { msg.className = 'text-xs mt-1 hidden'; return; }
+        if (np.value === cp.value) {
+            msg.textContent = '✓ Mật khẩu khớp';
+            msg.className = 'text-xs mt-1 text-green-600';
+        } else {
+            msg.textContent = '✗ Mật khẩu không khớp';
+            msg.className = 'text-xs mt-1 text-red-600';
+        }
+    }
+    if (np && cp) { np.addEventListener('input', check); cp.addEventListener('input', check); }
+
+    document.getElementById('changePwdForm').addEventListener('submit', function(e) {
+        if (np.value !== cp.value) {
+            e.preventDefault();
+            msg.textContent = '✗ Mật khẩu không khớp';
+            msg.className = 'text-xs mt-1 text-red-600';
+            cp.focus();
         }
     });
 })();
