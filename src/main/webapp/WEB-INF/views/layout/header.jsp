@@ -59,20 +59,20 @@
                                     <p class="text-sm font-bold text-gray-900">${user.fullName}</p>
                                     <p class="text-xs text-gray-500">${user.role}</p>
                                 </div>
-                                <a href="${pageContext.request.contextPath}/profile" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">👤 Hồ sơ cá nhân</a>
+                                <a href="${pageContext.request.contextPath}/profile" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Hồ sơ cá nhân</a>
                                 <c:if test="${user.role == 'JOBSEEKER'}">
-                                    <a href="${pageContext.request.contextPath}/applications/my" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">📋 Đơn ứng tuyển</a>
-                                    <a href="${pageContext.request.contextPath}/saved-jobs" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">★ Việc đã lưu</a>
+                                    <a href="${pageContext.request.contextPath}/applications/my" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Đơn ứng tuyển</a>
+                                    <a href="${pageContext.request.contextPath}/saved-jobs" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Việc đã lưu</a>
                                 </c:if>
                                 <c:if test="${user.role == 'RECRUITER'}">
-                                    <a href="${pageContext.request.contextPath}/jobs/manage" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">💼 Quản lý tin đăng</a>
-                                    <a href="${pageContext.request.contextPath}/applications/manage" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">📂 Quản lý ứng tuyển</a>
+                                    <a href="${pageContext.request.contextPath}/jobs/manage" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Quản lý tin đăng</a>
+                                    <a href="${pageContext.request.contextPath}/applications/manage" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Quản lý ứng tuyển</a>
                                 </c:if>
                                 <c:if test="${user.role == 'ADMIN'}">
-                                    <a href="${pageContext.request.contextPath}/admin" class="block px-4 py-2.5 text-sm text-red-600 hover:bg-red-50">🛡 Trang quản trị</a>
+                                    <a href="${pageContext.request.contextPath}/admin" class="block px-4 py-2.5 text-sm text-red-600 hover:bg-red-50">Trang quản trị</a>
                                 </c:if>
                                 <div class="border-t border-gray-50 my-1"></div>
-                                <a href="${pageContext.request.contextPath}/logout" class="block px-4 py-2.5 text-sm text-red-600 hover:bg-red-50">🚪 Đăng xuất</a>
+                                <a href="${pageContext.request.contextPath}/logout" class="block px-4 py-2.5 text-sm text-red-600 hover:bg-red-50">Đăng xuất</a>
                             </div>
                         </div>
                     </c:when>

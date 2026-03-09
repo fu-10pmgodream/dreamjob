@@ -37,7 +37,7 @@
 
                 <button type="submit"
                         class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-lg whitespace-nowrap">
-                    🔍 Tìm kiếm
+                    Tìm kiếm
                 </button>
             </form>
 
@@ -57,7 +57,7 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="flex justify-between items-end mb-10">
             <div>
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">🔥 Việc Làm Hấp Dẫn (Lương Cao)</h2>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Việc Làm Hấp Dẫn (Lương Cao)</h2>
                 <p class="text-gray-500">Cơ hội thu nhập khủng từ các doanh nghiệp lớn</p>
             </div>
         </div>
@@ -77,9 +77,6 @@
                     </div>
                     <div class="flex justify-between items-center text-sm">
                         <span class="text-green-600 font-bold"><fmt:formatNumber value="${job.salaryMax / 1000000}" pattern="#.#"/>tr</span>
-                        <span class="text-gray-400 group-hover:text-blue-600 transition">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </span>
                     </div>
                 </a>
             </c:forEach>
@@ -91,7 +88,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-end mb-10">
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-2">🆕 Việc Làm Mới Nhất</h2>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Việc Làm Mới Nhất</h2>
                     <p class="text-gray-500">Ứng tuyển ngay để trở thành những người đầu tiên</p>
                 </div>
             </div>
