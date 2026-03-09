@@ -64,12 +64,6 @@
                                 <span class="block text-xs text-gray-500">Tôi muốn đăng tin</span>
                             </div>
                         </label>
-                        <label for="role-admin" class="relative flex p-4 border rounded-xl cursor-pointer hover:bg-blue-50 transition border-gray-200 group has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
-                            <input type="radio" id="role-admin" name="role" value="ADMIN" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-                            <div class="ml-3">
-                                <span class="block text-sm font-bold text-gray-900">Admin</span>
-                            </div>
-                        </label>
                     </div>
                 </div>
 
