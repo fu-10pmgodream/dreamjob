@@ -264,6 +264,19 @@ public class JobDAO {
         return false;
     }
 
+    public boolean closeJob(int jobId, int recruiterId) {
+        String sql = "UPDATE Jobs SET Status='CLOSED' WHERE JobID=? AND RecruiterID=? AND Status='ACTIVE'";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, jobId);
+            ps.setInt(2, recruiterId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean deleteJob(int jobId, int recruiterId) {
         String sql = "DELETE FROM Jobs WHERE JobID=? AND RecruiterID=?";
         try (Connection con = dbContext.getConnection();

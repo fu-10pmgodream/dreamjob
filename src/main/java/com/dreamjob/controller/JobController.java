@@ -181,6 +181,19 @@ public class JobController {
         return "recruiter/job-form";
     }
 
+    @PostMapping("/close")
+    public String close(@RequestParam int id, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null || !"RECRUITER".equals(user.getRole())) {
+            return "redirect:/login";
+        }
+        Integer recruiterId = userDAO.getRecruiterIdByUserId(user.getUserId());
+        if (jobDAO.closeJob(id, recruiterId)) {
+            return "redirect:/jobs/manage?success=closed";
+        }
+        return "redirect:/jobs/manage?error=close_failed";
+    }
+
     @PostMapping("/delete")
     public String delete(@RequestParam int id, HttpSession session) {
         User user = (User) session.getAttribute("user");

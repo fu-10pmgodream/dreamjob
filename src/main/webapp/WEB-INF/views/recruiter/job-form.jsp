@@ -71,7 +71,7 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Lương tối thiểu (VND) <span class="text-red-500">*</span></label>
                     <input type="number" name="salaryMin" id="salaryMin" value="${job.salaryMin}" required
-                           min="0" step="500000"
+                           min="0" step="100000"
                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 shadow-sm"
                            placeholder="Ví dụ: 10000000">
                 </div>
@@ -80,7 +80,7 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Lương tối đa (VND) <span class="text-red-500">*</span></label>
                     <input type="number" name="salaryMax" id="salaryMax" value="${job.salaryMax}" required
-                           min="0" step="500000"
+                           min="0" step="100000"
                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 shadow-sm"
                            placeholder="Ví dụ: 30000000">
                 </div>
