@@ -47,7 +47,8 @@ public class JobController {
         if (job == null)
             return "error/404";
         model.addAttribute("job", job);
-        model.addAttribute("similarJobs", jobDAO.getLatestJobs(3));
+        model.addAttribute("similarJobs",
+                jobDAO.getSimilarJobs(job.getJobId(), job.getCategoryId(), job.getLocationId(), 3));
 
         User user = (User) session.getAttribute("user");
         if (user != null && "JOBSEEKER".equals(user.getRole())) {

@@ -30,6 +30,123 @@ public class JobDAO {
         return getJobsByOrder("j.SalaryMax DESC", limit);
     }
 
+    /**
+     * Lấy việc làm tương tự theo thứ tự ưu tiên:
+     * 1. Cùng danh mục + cùng địa điểm (xếp theo ngày đăng mới nhất)
+     * 2. Bổ sung cùng danh mục nếu chưa đủ
+     * 3. Fallback mới nhất nếu vẫn chưa đủ
+     * Luôn loại trừ job hiện tại.
+     */
+    public List<Job> getSimilarJobs(int currentJobId, int categoryId, int locationId, int limit) {
+        List<Job> result = new ArrayList<>();
+
+        // --- Bước 1: cùng category + location ---
+        if (categoryId > 0 && locationId > 0) {
+            String sql = "SELECT TOP (?) j.*, r.CompanyName, r.LogoPath, l.City, c.CategoryName "
+                    + "FROM Jobs j "
+                    + "JOIN RecruiterProfiles r ON j.RecruiterID = r.RecruiterID "
+                    + "LEFT JOIN Locations l ON j.LocationID = l.LocationID "
+                    + "LEFT JOIN JobCategories c ON j.CategoryID = c.CategoryID "
+                    + "WHERE j.Status = 'ACTIVE' AND j.JobID <> ? "
+                    + "  AND j.CategoryID = ? AND j.LocationID = ? "
+                    + "ORDER BY j.PostedDate DESC";
+            result.addAll(queryJobs(sql, limit, currentJobId, categoryId, locationId));
+        }
+
+        // --- Bước 2: bổ sung cùng category (loại bỏ id đã có) ---
+        if (result.size() < limit && categoryId > 0) {
+            int need = limit - result.size();
+            List<Integer> excludeIds = getIds(result);
+            excludeIds.add(currentJobId);
+            String inClause = buildInClause(excludeIds.size());
+            String sql = "SELECT TOP (?) j.*, r.CompanyName, r.LogoPath, l.City, c.CategoryName "
+                    + "FROM Jobs j "
+                    + "JOIN RecruiterProfiles r ON j.RecruiterID = r.RecruiterID "
+                    + "LEFT JOIN Locations l ON j.LocationID = l.LocationID "
+                    + "LEFT JOIN JobCategories c ON j.CategoryID = c.CategoryID "
+                    + "WHERE j.Status = 'ACTIVE' AND j.JobID NOT IN (" + inClause + ") "
+                    + "  AND j.CategoryID = ? "
+                    + "ORDER BY j.PostedDate DESC";
+            result.addAll(queryJobsWithExclude(sql, need, excludeIds, categoryId));
+        }
+
+        // --- Bước 3: fallback mới nhất ---
+        if (result.size() < limit) {
+            int need = limit - result.size();
+            List<Integer> excludeIds = getIds(result);
+            excludeIds.add(currentJobId);
+            String inClause = buildInClause(excludeIds.size());
+            String sql = "SELECT TOP (?) j.*, r.CompanyName, r.LogoPath, l.City, c.CategoryName "
+                    + "FROM Jobs j "
+                    + "JOIN RecruiterProfiles r ON j.RecruiterID = r.RecruiterID "
+                    + "LEFT JOIN Locations l ON j.LocationID = l.LocationID "
+                    + "LEFT JOIN JobCategories c ON j.CategoryID = c.CategoryID "
+                    + "WHERE j.Status = 'ACTIVE' AND j.JobID NOT IN (" + inClause + ") "
+                    + "ORDER BY j.PostedDate DESC";
+            result.addAll(queryJobsWithExclude(sql, need, excludeIds, null));
+        }
+
+        return result;
+    }
+
+    // ─── Private helpers for getSimilarJobs ───────────────────────────────
+
+    private List<Job> queryJobs(String sql, int limit, int excludeId, int categoryId, int locationId) {
+        List<Job> list = new ArrayList<>();
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            ps.setInt(2, excludeId);
+            ps.setInt(3, categoryId);
+            ps.setInt(4, locationId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next())
+                    list.add(mapJob(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    private List<Job> queryJobsWithExclude(String sql, int limit,
+            List<Integer> excludeIds, Integer categoryId) {
+        List<Job> list = new ArrayList<>();
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            int idx = 1;
+            ps.setInt(idx++, limit);
+            for (int id : excludeIds)
+                ps.setInt(idx++, id);
+            if (categoryId != null)
+                ps.setInt(idx, categoryId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next())
+                    list.add(mapJob(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    private List<Integer> getIds(List<Job> jobs) {
+        List<Integer> ids = new ArrayList<>();
+        for (Job j : jobs)
+            ids.add(j.getJobId());
+        return ids;
+    }
+
+    private String buildInClause(int size) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            if (i > 0)
+                sb.append(",");
+            sb.append("?");
+        }
+        return sb.toString();
+    }
+
     private List<Job> getJobsByOrder(String orderBy, int limit) {
         List<Job> jobs = new ArrayList<>();
         String sql = "SELECT TOP (?) j.*, r.CompanyName, r.LogoPath, l.City, c.CategoryName " +
