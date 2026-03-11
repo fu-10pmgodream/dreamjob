@@ -40,6 +40,14 @@ public class AuthController {
         User user = userDAO.login(email, password);
         if (user != null) {
             session.setAttribute("user", user);
+            
+            if ("RECRUITER".equals(user.getRole())) {
+                RecruiterProfile profile = profileDAO.getRecruiterProfileByUserId(user.getUserId());
+                if (profile != null && profile.getLogoPath() != null && !profile.getLogoPath().isEmpty()) {
+                    session.setAttribute("userAvatar", profile.getLogoPath());
+                }
+            }
+            
             return "redirect:/";
         } else {
             model.addAttribute("error", "Email hoặc mật khẩu không chính xác!");

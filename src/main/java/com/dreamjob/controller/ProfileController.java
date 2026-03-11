@@ -130,6 +130,14 @@ public class ProfileController {
         if (profileDAO.upsertRecruiterProfile(profile, trim(fullName), trim(phone).isEmpty() ? null : trim(phone))) {
             User updated = userDAO.findByEmail(user.getEmail());
             session.setAttribute("user", updated);
+            
+            RecruiterProfile updatedProfile = profileDAO.getRecruiterProfileByUserId(user.getUserId());
+            if (updatedProfile != null && updatedProfile.getLogoPath() != null && !updatedProfile.getLogoPath().isEmpty()) {
+                session.setAttribute("userAvatar", updatedProfile.getLogoPath());
+            } else {
+                session.removeAttribute("userAvatar");
+            }
+            
             return "redirect:/profile?success=true";
         }
         model.addAttribute("error", "Cập nhật thất bại!");

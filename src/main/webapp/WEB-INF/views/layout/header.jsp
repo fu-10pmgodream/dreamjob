@@ -50,9 +50,16 @@
                         <div class="relative group">
                             <div class="flex items-center space-x-2 text-gray-700 hover:text-teal-600 focus:outline-none">
                                 <span class="font-medium hidden sm:block">${user.fullName}</span>
-                                <div class="w-9 h-9 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold text-sm">
-                                    ${user.fullName.substring(0, 1)}
-                                </div>
+                                <c:choose>
+                                    <c:when test="${not empty userAvatar}">
+                                        <img src="${userAvatar}" alt="Avatar" class="w-9 h-9 rounded-full object-cover border border-gray-200 bg-white">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="w-9 h-9 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold text-sm">
+                                            ${user.fullName.substring(0, 1)}
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                             <div class="absolute right-0 w-52 bg-white rounded-xl shadow-xl py-2 border border-gray-100 hidden group-hover:block z-50">
                                 <div class="px-4 py-2 border-b border-gray-50">
