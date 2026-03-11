@@ -3,6 +3,7 @@ package com.dreamjob.controller;
 import com.dreamjob.dal.SearchDAO;
 import com.dreamjob.dal.SavedJobDAO;
 import com.dreamjob.dal.UserDAO;
+import com.dreamjob.dal.JobDAO;
 import com.dreamjob.model.Job;
 import com.dreamjob.model.User;
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +24,8 @@ public class SearchController {
     private SavedJobDAO savedJobDAO;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private JobDAO jobDAO;
 
     private static final int PAGE_SIZE = 9;
 
@@ -36,7 +39,7 @@ public class SearchController {
             @RequestParam(required = false, defaultValue = "newest") String sortBy,
             @RequestParam(defaultValue = "1") int page,
             HttpSession session, Model model) {
-
+        jobDAO.autoCloseExpiredJobs();
         List<Job> jobs = searchDAO.searchJobs(keyword, categoryId, locationId,
                 salaryMin, salaryMax, employmentType, sortBy, page, PAGE_SIZE);
 

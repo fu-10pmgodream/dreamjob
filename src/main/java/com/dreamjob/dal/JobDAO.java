@@ -277,6 +277,16 @@ public class JobDAO {
         return false;
     }
 
+    public void autoCloseExpiredJobs() {
+        String sql = "UPDATE Jobs SET Status='CLOSED' WHERE Status='ACTIVE' AND ExpiredDate < GETDATE()";
+        try (Connection con = dbContext.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean deleteJob(int jobId, int recruiterId) {
         String sql = "DELETE FROM Jobs WHERE JobID=? AND RecruiterID=?";
         try (Connection con = dbContext.getConnection();
