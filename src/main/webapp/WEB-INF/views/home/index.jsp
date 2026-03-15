@@ -62,25 +62,81 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <c:forEach items="${hottestJobs}" var="job">
-                <a href="${pageContext.request.contextPath}/jobs/${job.jobId}"
-                   class="block bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-lg hover:border-teal-200 transition-all group cursor-pointer">
-                    <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center p-1 border border-gray-50">
-                            <img src="${not empty job.logoPath ? job.logoPath : 'https://via.placeholder.com/100'}" alt="logo" class="max-w-full max-h-full object-contain">
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-900 group-hover:text-teal-600 truncate w-32">${job.title}</h4>
-                            <p class="text-xs text-teal-600 font-medium">${job.companyName}</p>
-                        </div>
+        <div class="relative group">
+            <!-- Navigation Buttons -->
+            <button id="prevHottestBtn" class="absolute z-10 -left-5 top-1/2 -translate-y-1/2 bg-white rounded-full p-3 shadow-lg border border-gray-100 text-teal-600 hover:bg-teal-50 hidden md:flex opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button id="nextHottestBtn" class="absolute z-10 -right-5 top-1/2 -translate-y-1/2 bg-white rounded-full p-3 shadow-lg border border-gray-100 text-teal-600 hover:bg-teal-50 hidden md:flex opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+
+            <!-- Slider Container -->
+            <div id="hottestSlider" class="flex overflow-x-auto gap-6 pb-6 pt-2 snap-x snap-mandatory scroll-smooth hide-scrollbar px-2 -mx-2">
+                <c:forEach items="${hottestJobs}" var="job">
+                    <div class="snap-start flex-none w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+                        <a href="${pageContext.request.contextPath}/jobs/${job.jobId}"
+                           class="block h-full bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 hover:border-teal-300 transition-all duration-300 group cursor-pointer">
+                            <div class="flex items-center space-x-4 mb-4">
+                                <div class="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center p-1 border border-gray-50 flex-shrink-0">
+                                    <img src="${not empty job.logoPath ? job.logoPath : 'https://via.placeholder.com/100'}" alt="logo" class="max-w-full max-h-full object-contain">
+                                </div>
+                                <div class="overflow-hidden">
+                                    <h4 class="font-bold text-gray-900 group-hover:text-teal-600 truncate" title="${job.title}">${job.title}</h4>
+                                    <p class="text-xs text-teal-600 font-medium truncate" title="${job.companyName}">${job.companyName}</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center text-sm pt-4 border-t border-gray-50 mt-auto">
+                                <span class="text-green-600 font-bold text-lg"><fmt:formatNumber value="${job.salaryMax / 1000000}" pattern="#.#"/>tr</span>
+                                <span class="bg-teal-50 text-teal-700 text-xs px-3 py-1.5 rounded-lg font-semibold group-hover:bg-teal-600 group-hover:text-white transition-colors">Ứng tuyển</span>
+                            </div>
+                        </a>
                     </div>
-                    <div class="flex justify-between items-center text-sm">
-                        <span class="text-green-600 font-bold"><fmt:formatNumber value="${job.salaryMax / 1000000}" pattern="#.#"/>tr</span>
-                    </div>
-                </a>
-            </c:forEach>
+                </c:forEach>
+            </div>
         </div>
+
+        <style>
+            .hide-scrollbar {
+                -ms-overflow-style: none; /* IE and Edge */
+                scrollbar-width: none; /* Firefox */
+            }
+            .hide-scrollbar::-webkit-scrollbar {
+                display: none; /* Chrome, Safari and Opera */
+            }
+        </style>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const slider = document.getElementById('hottestSlider');
+                const prevBtn = document.getElementById('prevHottestBtn');
+                const nextBtn = document.getElementById('nextHottestBtn');
+                
+                if(!slider || !prevBtn || !nextBtn) return;
+
+                prevBtn.addEventListener('click', () => {
+                    const scrollAmount = slider.clientWidth;
+                    // Nếu đang ở đầu, cuộn mượt về vị trí cuối
+                    if (slider.scrollLeft <= 10) {
+                        const maxScroll = slider.scrollWidth - slider.clientWidth;
+                        slider.scrollTo({ left: maxScroll, behavior: 'smooth' });
+                    } else {
+                        slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    }
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    const scrollAmount = slider.clientWidth;
+                    const maxScroll = slider.scrollWidth - slider.clientWidth;
+                    // Nếu đã cuộn đến cuối, cuộn mượt về đầu
+                    if (slider.scrollLeft >= maxScroll - 10) {
+                        slider.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    }
+                });
+            });
+        </script>
     </section>
 
     <!-- Latest Jobs Section -->

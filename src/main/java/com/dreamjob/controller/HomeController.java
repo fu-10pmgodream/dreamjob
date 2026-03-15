@@ -21,7 +21,7 @@ public class HomeController {
         jobDAO.autoCloseExpiredJobs();
         model.addAttribute("featuredJobs", jobDAO.getFeaturedJobs(6));
         model.addAttribute("latestJobs", jobDAO.getLatestJobs(8));
-        model.addAttribute("hottestJobs", jobDAO.getHottestJobs(4));
+        model.addAttribute("hottestJobs", jobDAO.getHottestJobs(8));
         model.addAttribute("locations", searchDAO.getAllLocations());
         return "home/index";
     }
