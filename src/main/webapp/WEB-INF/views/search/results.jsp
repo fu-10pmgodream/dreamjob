@@ -122,8 +122,7 @@
                                                     <c:if test="${user.role == 'JOBSEEKER'}">
                                                         <c:set var="isSaved" value="${savedJobIds.contains(job.jobId)}"/>
                                                         <button onclick="toggleSave(this, ${job.jobId})"
-                                                            class="save-btn mt-1 text-xs px-3 py-1.5 rounded-lg font-bold transition"
-                                                            style="${isSaved ? 'background:#fef9c3;color:#b45309' : 'background:#f3f4f6;color:#4b5563'}">
+                                                            class="save-btn mt-1 text-xs px-3 py-1.5 rounded-lg font-bold transition ${isSaved ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}">
                                                             <c:choose><c:when test="${isSaved}">★ Đã lưu</c:when><c:otherwise>☆ Lưu lại</c:otherwise></c:choose>
                                                         </button>
                                                     </c:if>

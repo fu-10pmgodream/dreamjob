@@ -107,8 +107,8 @@
     function makeChart(id, type, labels, data, colors) {
         new Chart(document.getElementById(id), {
             type: type,
-            data: { labels: labels, datasets: [{ data: data, backgroundColor: colors || teal, borderWidth: 0 }] },
-            options: { plugins: { legend: { position: 'bottom' } }, responsive: true }
+            data: { labels: labels, datasets: [{ label: 'Số lượng', data: data, backgroundColor: colors || teal, borderWidth: 0 }] },
+            options: { plugins: { legend: { display: type !== 'bar', position: 'bottom' } }, responsive: true }
         });
     }
 
